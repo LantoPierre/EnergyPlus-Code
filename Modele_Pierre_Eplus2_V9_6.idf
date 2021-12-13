@@ -1,0 +1,4128 @@
+
+Version,
+	9.6;					 !- Version Identifier
+
+SimulationControl,
+  No,                      !- Do Zone Sizing Calculation
+  No,                      !- Do System Sizing Calculation
+  No,                      !- Do Plant Sizing Calculation
+  No,                      !- Run Simulation for Sizing Periods
+  Yes,                     !- Run Simulation for Weather File Run Periods
+  No,                      !- Do HVAC Sizing Simulation for Sizing Periods
+  1;                       !- Maximum Number of HVAC Sizing Simulation Passes
+
+ Building,
+  Maison Piere,            !- Name
+  0.0,                     !- North Axis {deg}
+  Suburbs,                 !- Terrain
+  0.01,                    !- Loads Convergence Tolerance Value {W}
+  0.01,                    !- Temperature Convergence Tolerance Value {deltaC}
+  FullExterior,            !- Solar Distribution
+  ,                        !- Maximum Number of Warmup Days
+  ;                        !- Minimum Number of Warmup Days
+
+Timestep,6;
+
+Site:Location,
+    OzoirLaFerriere,         !- Name
+    48.77,                   !- Latitude {deg}
+    2.67,                    !- Longitude {deg}
+    1.0,                     !- Time Zone {hr}
+    109;                     !- Elevation {m}
+
+  RunPeriod,
+    Run Period 1,            !- Name
+    1,                       !- Begin Month
+    1,                       !- Begin Day of Month
+    ,                        !- Begin Year
+    12,                      !- End Month
+    31,                      !- End Day of Month
+    ,                        !- End Year
+    Thursday,                !- Day of Week for Start Day
+    Yes,                     !- Use Weather File Holidays and Special Days
+    No,                      !- Use Weather File Daylight Saving Period
+    No,                      !- Apply Weekend Holiday Rule
+    Yes,                     !- Use Weather File Rain Indicators
+    Yes;                     !- Use Weather File Snow Indicators
+
+  RunPeriodControl:SpecialDays,
+    SummerHolidays,          !- Name
+    08/06,                   !- Start Date
+    15,                      !- Duration {days}
+    Holiday;                 !- Special Day Type
+
+RunPeriodControl:SpecialDays,
+  WinterHolidays,          !- Name
+  12/03,                   !- Start Date
+  8,                       !- Duration {days}
+  Holiday;                 !- Special Day Type
+
+Site:GroundTemperature:BuildingSurface,
+  15.76,
+  15.82,
+  16.05,
+  16.49,
+  16.87,
+  17.15,
+  17.32,
+  17.19,
+  17,
+  16.58,
+  16.14,
+  15.9;
+
+  ScheduleTypeLimits,
+    Any Number,              !- Name
+    0,                       !- Lower Limit Value
+    1000,                    !- Upper Limit Value
+    Continuous,              !- Numeric Type
+    dimensionless;           !- Unit Type
+
+  ScheduleTypeLimits,
+    Chauffage,               !- Name
+    -50,                     !- Lower Limit Value
+    19,                      !- Upper Limit Value
+    Continuous,              !- Numeric Type
+    temperature;             !- Unit Type
+
+  ScheduleTypeLimits,
+    Fraction,                !- Name
+    0,                       !- Lower Limit Value
+    1,                       !- Upper Limit Value
+    Continuous,              !- Numeric Type
+    dimensionless;           !- Unit Type
+
+  ScheduleTypeLimits,
+    Refroidissement,         !- Name
+    28,                      !- Lower Limit Value
+    100,                     !- Upper Limit Value
+    Continuous,              !- Numeric Type
+    temperature;             !- Unit Type
+
+!-   ===========  ALL OBJECTS IN CLASS: SCHEDULE:DAY:HOURLY ===========
+
+  Schedule:Day:Hourly,
+    ECSScheduleDay,          !- Name
+    Fraction,                !- Schedule Type Limits Name
+    0.016,                   !- Hour 1
+    0.016,                   !- Hour 2
+    0.015,                   !- Hour 3
+    0.017,                   !- Hour 4
+    0.029,                   !- Hour 5
+    0.124,                   !- Hour 6
+    0.366,                   !- Hour 7
+    0.867,                   !- Hour 8
+    1,                       !- Hour 9
+    0.739,                   !- Hour 10
+    0.644,                   !- Hour 11
+    0.534,                   !- Hour 12
+    0.466,                   !- Hour 13
+    0.312,                   !- Hour 14
+    0.229,                   !- Hour 15
+    0.17,                    !- Hour 16
+    0.166,                   !- Hour 17
+    0.168,                   !- Hour 18
+    0.292,                   !- Hour 19
+    0.408,                   !- Hour 20
+    0.436,                   !- Hour 21
+    0.447,                   !- Hour 22
+    0.531,                   !- Hour 23
+    0.433;                   !- Hour 24
+
+  Schedule:Day:Hourly,
+    ECSScheduleHolidays,     !- Name
+    Fraction,                !- Schedule Type Limits Name
+    0,                       !- Hour 1
+    0,                       !- Hour 2
+    0,                       !- Hour 3
+    0,                       !- Hour 4
+    0,                       !- Hour 5
+    0,                       !- Hour 6
+    0,                       !- Hour 7
+    0,                       !- Hour 8
+    0,                       !- Hour 9
+    0,                       !- Hour 10
+    0,                       !- Hour 11
+    0,                       !- Hour 12
+    0,                       !- Hour 13
+    0,                       !- Hour 14
+    0,                       !- Hour 15
+    0,                       !- Hour 16
+    0,                       !- Hour 17
+    0,                       !- Hour 18
+    0,                       !- Hour 19
+    0,                       !- Hour 20
+    0,                       !- Hour 21
+    0,                       !- Hour 22
+    0,                       !- Hour 23
+    0;                       !- Hour 24
+
+  Schedule:Day:Hourly,
+    DayZone_OccupationFriday,!- Name
+    Fraction,                !- Schedule Type Limits Name
+    0.09,                    !- Hour 1
+    0.1,                     !- Hour 2
+    0.1,                     !- Hour 3
+    0.12,                    !- Hour 4
+    0.17,                    !- Hour 5
+    0.25,                    !- Hour 6
+    0.36,                    !- Hour 7
+    0.42,                    !- Hour 8
+    0.33,                    !- Hour 9
+    0.22,                    !- Hour 10
+    0.21,                    !- Hour 11
+    0.24,                    !- Hour 12
+    0.31,                    !- Hour 13
+    0.35,                    !- Hour 14
+    0.28,                    !- Hour 15
+    0.24,                    !- Hour 16
+    0.24,                    !- Hour 17
+    0.29,                    !- Hour 18
+    0.41,                    !- Hour 19
+    0.57,                    !- Hour 20
+    0.7,                     !- Hour 21
+    0.77,                    !- Hour 22
+    0.79,                    !- Hour 23
+    0.72;                    !- Hour 24
+
+  Schedule:Day:Hourly,
+    DayZone_OccupationMonday,!- Name
+    Fraction,                !- Schedule Type Limits Name
+    0.25,                    !- Hour 1
+    0.11,                    !- Hour 2
+    0.11,                    !- Hour 3
+    0.12,                    !- Hour 4
+    0.16,                    !- Hour 5
+    0.23,                    !- Hour 6
+    0.33,                    !- Hour 7
+    0.41,                    !- Hour 8
+    0.32,                    !- Hour 9
+    0.23,                    !- Hour 10
+    0.22,                    !- Hour 11
+    0.23,                    !- Hour 12
+    0.28,                    !- Hour 13
+    0.33,                    !- Hour 14
+    0.26,                    !- Hour 15
+    0.24,                    !- Hour 16
+    0.24,                    !- Hour 17
+    0.27,                    !- Hour 18
+    0.39,                    !- Hour 19
+    0.56,                    !- Hour 20
+    0.69,                    !- Hour 21
+    0.78,                    !- Hour 22
+    0.83,                    !- Hour 23
+    0.74;                    !- Hour 24
+
+  Schedule:Day:Hourly,
+    DayZone_OccupationSaturday,  !- Name
+    Fraction,                !- Schedule Type Limits Name
+    0.08,                    !- Hour 1
+    0.08,                    !- Hour 2
+    0.09,                    !- Hour 3
+    0.1,                     !- Hour 4
+    0.13,                    !- Hour 5
+    0.17,                    !- Hour 6
+    0.24,                    !- Hour 7
+    0.35,                    !- Hour 8
+    0.43,                    !- Hour 9
+    0.44,                    !- Hour 10
+    0.44,                    !- Hour 11
+    0.4,                     !- Hour 12
+    0.44,                    !- Hour 13
+    0.5,                     !- Hour 14
+    0.47,                    !- Hour 15
+    0.4,                     !- Hour 16
+    0.36,                    !- Hour 17
+    0.35,                    !- Hour 18
+    0.43,                    !- Hour 19
+    0.53,                    !- Hour 20
+    0.6,                     !- Hour 21
+    0.63,                    !- Hour 22
+    0.65,                    !- Hour 23
+    0.6;                     !- Hour 24
+
+  Schedule:Day:Hourly,
+    DayZone_OccupationSunday,!- Name
+    Fraction,                !- Schedule Type Limits Name
+    0.08,                    !- Hour 1
+    0.09,                    !- Hour 2
+    0.11,                    !- Hour 3
+    0.12,                    !- Hour 4
+    0.14,                    !- Hour 5
+    0.15,                    !- Hour 6
+    0.2,                     !- Hour 7
+    0.3,                     !- Hour 8
+    0.41,                    !- Hour 9
+    0.5,                     !- Hour 10
+    0.54,                    !- Hour 11
+    0.5,                     !- Hour 12
+    0.48,                    !- Hour 13
+    0.48,                    !- Hour 14
+    0.45,                    !- Hour 15
+    0.41,                    !- Hour 16
+    0.38,                    !- Hour 17
+    0.36,                    !- Hour 18
+    0.42,                    !- Hour 19
+    0.52,                    !- Hour 20
+    0.67,                    !- Hour 21
+    0.77,                    !- Hour 22
+    0.8,                     !- Hour 23
+    0.72;                    !- Hour 24
+
+  Schedule:Day:Hourly,
+    DayZone_OccupationThursday,  !- Name
+    Fraction,                !- Schedule Type Limits Name
+    0,                       !- Hour 1
+    1,                       !- Hour 2
+    0.1,                     !- Hour 3
+    0.11,                    !- Hour 4
+    0.12,                    !- Hour 5
+    0.17,                    !- Hour 6
+    0.24,                    !- Hour 7
+    0.36,                    !- Hour 8
+    0.44,                    !- Hour 9
+    0.33,                    !- Hour 10
+    0.22,                    !- Hour 11
+    0.2,                     !- Hour 12
+    0.22,                    !- Hour 13
+    0.29,                    !- Hour 14
+    0.33,                    !- Hour 15
+    0.27,                    !- Hour 16
+    0.25,                    !- Hour 17
+    0.24,                    !- Hour 18
+    0.28,                    !- Hour 19
+    0.39,                    !- Hour 20
+    0.57,                    !- Hour 21
+    0.71,                    !- Hour 22
+    0.81,                    !- Hour 23
+    0.74;                    !- Hour 24
+
+  Schedule:Day:Hourly,
+    DayZone_OccupationTuesday,  !- Name
+    Fraction,                !- Schedule Type Limits Name
+    0.08,                    !- Hour 1
+    0.09,                    !- Hour 2
+    0.1,                     !- Hour 3
+    0.12,                    !- Hour 4
+    0.17,                    !- Hour 5
+    0.25,                    !- Hour 6
+    0.38,                    !- Hour 7
+    0.44,                    !- Hour 8
+    0.34,                    !- Hour 9
+    0.23,                    !- Hour 10
+    0.21,                    !- Hour 11
+    0.23,                    !- Hour 12
+    0.29,                    !- Hour 13
+    0.32,                    !- Hour 14
+    0.26,                    !- Hour 15
+    0.24,                    !- Hour 16
+    0.26,                    !- Hour 17
+    0.31,                    !- Hour 18
+    0.42,                    !- Hour 19
+    0.57,                    !- Hour 20
+    0.72,                    !- Hour 21
+    0.79,                    !- Hour 22
+    0.82,                    !- Hour 23
+    0.73;                    !- Hour 24
+
+  Schedule:Day:Hourly,
+    DayZone_OccupationWednesday,  !- Name
+    Fraction,                !- Schedule Type Limits Name
+    0.09,                    !- Hour 1
+    0.09,                    !- Hour 2
+    0.11,                    !- Hour 3
+    0.16,                    !- Hour 4
+    0.26,                    !- Hour 5
+    0.36,                    !- Hour 6
+    0.46,                    !- Hour 7
+    0.48,                    !- Hour 8
+    0.37,                    !- Hour 9
+    0.29,                    !- Hour 10
+    0.25,                    !- Hour 11
+    0.26,                    !- Hour 12
+    0.33,                    !- Hour 13
+    0.36,                    !- Hour 14
+    0.31,                    !- Hour 15
+    0.28,                    !- Hour 16
+    0.27,                    !- Hour 17
+    0.29,                    !- Hour 18
+    0.4,                     !- Hour 19
+    0.56,                    !- Hour 20
+    0.7,                     !- Hour 21
+    0.77,                    !- Hour 22
+    0.8,                     !- Hour 23
+    0.73;                    !- Hour 24
+
+  Schedule:Day:Hourly,
+    DayZone_TemperatureFriday,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+    18.3,                    !- Hour 1
+    18.3,                    !- Hour 2
+    18.3,                    !- Hour 3
+    18.4,                    !- Hour 4
+    18.5,                    !- Hour 5
+    18.7,                    !- Hour 6
+    19.1,                    !- Hour 7
+    19.3,                    !- Hour 8
+    19,                      !- Hour 9
+    18.7,                    !- Hour 10
+    18.6,                    !- Hour 11
+    18.7,                    !- Hour 12
+    18.9,                    !- Hour 13
+    19,                      !- Hour 14
+    18.8,                    !- Hour 15
+    18.7,                    !- Hour 16
+    18.7,                    !- Hour 17
+    18.9,                    !- Hour 18
+    19.2,                    !- Hour 19
+    19.7,                    !- Hour 20
+    20.1,                    !- Hour 21
+    20.3,                    !- Hour 22
+    20.4,                    !- Hour 23
+    20.2;                    !- Hour 24
+
+  Schedule:Day:Hourly,
+    DayZone_TemperatureMonday,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+    18.7,                    !- Hour 1
+    18.3,                    !- Hour 2
+    18.3,                    !- Hour 3
+    18.4,                    !- Hour 4
+    18.5,                    !- Hour 5
+    18.7,                    !- Hour 6
+    19,                      !- Hour 7
+    19.2,                    !- Hour 8
+    19,                      !- Hour 9
+    18.7,                    !- Hour 10
+    18.7,                    !- Hour 11
+    18.7,                    !- Hour 12
+    18.9,                    !- Hour 13
+    19,                      !- Hour 14
+    18.8,                    !- Hour 15
+    18.7,                    !- Hour 16
+    18.7,                    !- Hour 17
+    18.8,                    !- Hour 18
+    19.2,                    !- Hour 19
+    19.7,                    !- Hour 20
+    20.1,                    !- Hour 21
+    20.3,                    !- Hour 22
+    20.5,                    !- Hour 23
+    20.2;                    !- Hour 24
+
+  Schedule:Day:Hourly,
+    DayZone_TemperatureSaturday,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+    18.2,                    !- Hour 1
+    18.2,                    !- Hour 2
+    18.3,                    !- Hour 3
+    18.3,                    !- Hour 4
+    18.4,                    !- Hour 5
+    18.5,                    !- Hour 6
+    18.7,                    !- Hour 7
+    19,                      !- Hour 8
+    19.3,                    !- Hour 9
+    19.3,                    !- Hour 10
+    19.3,                    !- Hour 11
+    19.2,                    !- Hour 12
+    19.3,                    !- Hour 13
+    19.5,                    !- Hour 14
+    19.4,                    !- Hour 15
+    19.2,                    !- Hour 16
+    19.1,                    !- Hour 17
+    19.1,                    !- Hour 18
+    19.3,                    !- Hour 19
+    19.6,                    !- Hour 20
+    19.8,                    !- Hour 21
+    19.9,                    !- Hour 22
+    20,                      !- Hour 23
+    19.8;                    !- Hour 24
+
+  Schedule:Day:Hourly,
+    DayZone_TemperatureSunday,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+    18.2,                    !- Hour 1
+    18.3,                    !- Hour 2
+    18.3,                    !- Hour 3
+    18.4,                    !- Hour 4
+    18.4,                    !- Hour 5
+    18.5,                    !- Hour 6
+    18.6,                    !- Hour 7
+    18.9,                    !- Hour 8
+    19.2,                    !- Hour 9
+    19.5,                    !- Hour 10
+    19.6,                    !- Hour 11
+    19.5,                    !- Hour 12
+    19.4,                    !- Hour 13
+    19.4,                    !- Hour 14
+    19.4,                    !- Hour 15
+    19.2,                    !- Hour 16
+    19.1,                    !- Hour 17
+    19.1,                    !- Hour 18
+    19.2,                    !- Hour 19
+    19.6,                    !- Hour 20
+    20,                      !- Hour 21
+    20.3,                    !- Hour 22
+    20.4,                    !- Hour 23
+    20.2;                    !- Hour 24
+
+  Schedule:Day:Hourly,
+    DayZone_TemperatureThursday,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+    18.3,                    !- Hour 1
+    18.3,                    !- Hour 2
+    18.3,                    !- Hour 3
+    18.4,                    !- Hour 4
+    18.5,                    !- Hour 5
+    18.7,                    !- Hour 6
+    19.1,                    !- Hour 7
+    19.3,                    !- Hour 8
+    19,                      !- Hour 9
+    18.7,                    !- Hour 10
+    18.6,                    !- Hour 11
+    18.7,                    !- Hour 12
+    18.9,                    !- Hour 13
+    19,                      !- Hour 14
+    18.8,                    !- Hour 15
+    18.7,                    !- Hour 16
+    18.7,                    !- Hour 17
+    18.8,                    !- Hour 18
+    19.2,                    !- Hour 19
+    19.7,                    !- Hour 20
+    20.1,                    !- Hour 21
+    20.3,                    !- Hour 22
+    20.4,                    !- Hour 23
+    20.2;                    !- Hour 24
+
+  Schedule:Day:Hourly,
+    DayZone_TemperatureTuesday,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+    18.3,                    !- Hour 1
+    18.3,                    !- Hour 2
+    18.3,                    !- Hour 3
+    18.4,                    !- Hour 4
+    18.5,                    !- Hour 5
+    18.8,                    !- Hour 6
+    19.1,                    !- Hour 7
+    19.3,                    !- Hour 8
+    19,                      !- Hour 9
+    18.7,                    !- Hour 10
+    18.6,                    !- Hour 11
+    18.7,                    !- Hour 12
+    18.9,                    !- Hour 13
+    19,                      !- Hour 14
+    18.8,                    !- Hour 15
+    18.7,                    !- Hour 16
+    18.8,                    !- Hour 17
+    18.9,                    !- Hour 18
+    19.3,                    !- Hour 19
+    19.7,                    !- Hour 20
+    20.1,                    !- Hour 21
+    20.4,                    !- Hour 22
+    20.5,                    !- Hour 23
+    20.2;                    !- Hour 24
+
+  Schedule:Day:Hourly,
+    DayZone_TemperatureWednesday,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+    18.3,                    !- Hour 1
+    18.3,                    !- Hour 2
+    18.3,                    !- Hour 3
+    18.5,                    !- Hour 4
+    18.8,                    !- Hour 5
+    19.1,                    !- Hour 6
+    19.4,                    !- Hour 7
+    19.4,                    !- Hour 8
+    19.1,                    !- Hour 9
+    18.9,                    !- Hour 10
+    18.8,                    !- Hour 11
+    18.8,                    !- Hour 12
+    19,                      !- Hour 13
+    19.1,                    !- Hour 14
+    18.9,                    !- Hour 15
+    18.8,                    !- Hour 16
+    18.8,                    !- Hour 17
+    18.9,                    !- Hour 18
+    19.2,                    !- Hour 19
+    19.7,                    !- Hour 20
+    20.1,                    !- Hour 21
+    20.3,                    !- Hour 22
+    20.4,                    !- Hour 23
+    20.2;                    !- Hour 24
+
+  Schedule:Day:Hourly,
+    DayZone_VentilationDay,  !- Name
+    Fraction,                !- Schedule Type Limits Name
+    0.427,                   !- Hour 1
+    0.427,                   !- Hour 2
+    0.427,                   !- Hour 3
+    0.427,                   !- Hour 4
+    0.427,                   !- Hour 5
+    0.427,                   !- Hour 6
+    0.427,                   !- Hour 7
+    0.427,                   !- Hour 8
+    0.427,                   !- Hour 9
+    0.427,                   !- Hour 10
+    0.427,                   !- Hour 11
+    0.427,                   !- Hour 12
+    0.427,                   !- Hour 13
+    0.427,                   !- Hour 14
+    0.427,                   !- Hour 15
+    0.427,                   !- Hour 16
+    0.427,                   !- Hour 17
+    0.427,                   !- Hour 18
+    1,                       !- Hour 19
+    0.427,                   !- Hour 20
+    0.427,                   !- Hour 21
+    0.427,                   !- Hour 22
+    0.427,                   !- Hour 23
+    0.427;                   !- Hour 24
+
+  Schedule:Day:Hourly,
+    Holidays_Occupation,     !- Name
+    Any Number,              !- Schedule Type Limits Name
+    0,                       !- Hour 1
+    0,                       !- Hour 2
+    0,                       !- Hour 3
+    0,                       !- Hour 4
+    0,                       !- Hour 5
+    0,                       !- Hour 6
+    0,                       !- Hour 7
+    0,                       !- Hour 8
+    0,                       !- Hour 9
+    0,                       !- Hour 10
+    0,                       !- Hour 11
+    0,                       !- Hour 12
+    0,                       !- Hour 13
+    0,                       !- Hour 14
+    0,                       !- Hour 15
+    0,                       !- Hour 16
+    0,                       !- Hour 17
+    0,                       !- Hour 18
+    0,                       !- Hour 19
+    0,                       !- Hour 20
+    0,                       !- Hour 21
+    0,                       !- Hour 22
+    0,                       !- Hour 23
+    0;                       !- Hour 24
+
+  Schedule:Day:Hourly,
+    Holidays_Temperature,    !- Name
+    Any Number,              !- Schedule Type Limits Name
+    7,                       !- Hour 1
+    7,                       !- Hour 2
+    7,                       !- Hour 3
+    7,                       !- Hour 4
+    7,                       !- Hour 5
+    7,                       !- Hour 6
+    7,                       !- Hour 7
+    7,                       !- Hour 8
+    7,                       !- Hour 9
+    7,                       !- Hour 10
+    7,                       !- Hour 11
+    7,                       !- Hour 12
+    7,                       !- Hour 13
+    7,                       !- Hour 14
+    7,                       !- Hour 15
+    7,                       !- Hour 16
+    7,                       !- Hour 17
+    7,                       !- Hour 18
+    7,                       !- Hour 19
+    7,                       !- Hour 20
+    7,                       !- Hour 21
+    7,                       !- Hour 22
+    7,                       !- Hour 23
+    7;                       !- Hour 24
+
+  Schedule:Day:Hourly,
+    Holidays_VentilationDay, !- Name
+    Fraction,                !- Schedule Type Limits Name
+    0,                       !- Hour 1
+    0,                       !- Hour 2
+    0,                       !- Hour 3
+    0,                       !- Hour 4
+    0,                       !- Hour 5
+    0,                       !- Hour 6
+    0,                       !- Hour 7
+    0,                       !- Hour 8
+    0,                       !- Hour 9
+    0,                       !- Hour 10
+    0,                       !- Hour 11
+    0,                       !- Hour 12
+    0,                       !- Hour 13
+    0,                       !- Hour 14
+    0,                       !- Hour 15
+    0,                       !- Hour 16
+    0,                       !- Hour 17
+    0,                       !- Hour 18
+    0,                       !- Hour 19
+    0,                       !- Hour 20
+    0,                       !- Hour 21
+    0,                       !- Hour 22
+    0,                       !- Hour 23
+    0;                       !- Hour 24
+
+  Schedule:Day:Hourly,
+    NightZone_OccupationFriday,  !- Name
+    Fraction,                !- Schedule Type Limits Name
+    0.58,                    !- Hour 1
+    0.58,                    !- Hour 2
+    0.58,                    !- Hour 3
+    0.57,                    !- Hour 4
+    0.52,                    !- Hour 5
+    0.45,                    !- Hour 6
+    0.34,                    !- Hour 7
+    0.17,                    !- Hour 8
+    0.05,                    !- Hour 9
+    0.01,                    !- Hour 10
+    0.01,                    !- Hour 11
+    0,                       !- Hour 12
+    0,                       !- Hour 13
+    0.02,                    !- Hour 14
+    0.02,                    !- Hour 15
+    0.02,                    !- Hour 16
+    0.02,                    !- Hour 17
+    0.01,                    !- Hour 18
+    0.01,                    !- Hour 19
+    0,                       !- Hour 20
+    0.01,                    !- Hour 21
+    0.09,                    !- Hour 22
+    0,                       !- Hour 23
+    0;                       !- Hour 24
+
+  Schedule:Day:Hourly,
+    NightZone_OccupationMonday,  !- Name
+    Fraction,                !- Schedule Type Limits Name
+    0.46,                    !- Hour 1
+    0.57,                    !- Hour 2
+    0.57,                    !- Hour 3
+    0.56,                    !- Hour 4
+    0.53,                    !- Hour 5
+    0.46,                    !- Hour 6
+    0.36,                    !- Hour 7
+    0.19,                    !- Hour 8
+    0.06,                    !- Hour 9
+    0.02,                    !- Hour 10
+    0.01,                    !- Hour 11
+    0.01,                    !- Hour 12
+    0,                       !- Hour 13
+    0.01,                    !- Hour 14
+    0.02,                    !- Hour 15
+    0.02,                    !- Hour 16
+    0.02,                    !- Hour 17
+    0.02,                    !- Hour 18
+    0.02,                    !- Hour 19
+    0.02,                    !- Hour 20
+    0.01,                    !- Hour 21
+    0.01,                    !- Hour 22
+    0.01,                    !- Hour 23
+    0.1;                     !- Hour 24
+
+  Schedule:Day:Hourly,
+    NightZone_OccupationSaturday,  !- Name
+    Fraction,                !- Schedule Type Limits Name
+    0.57,                    !- Hour 1
+    0.58,                    !- Hour 2
+    0.58,                    !- Hour 3
+    0.57,                    !- Hour 4
+    0.55,                    !- Hour 5
+    0.51,                    !- Hour 6
+    0.44,                    !- Hour 7
+    0.33,                    !- Hour 8
+    0.18,                    !- Hour 9
+    0.07,                    !- Hour 10
+    0.02,                    !- Hour 11
+    0.01,                    !- Hour 12
+    0.01,                    !- Hour 13
+    0.01,                    !- Hour 14
+    0.02,                    !- Hour 15
+    0.03,                    !- Hour 16
+    0.03,                    !- Hour 17
+    0.02,                    !- Hour 18
+    0.02,                    !- Hour 19
+    0.01,                    !- Hour 20
+    0.01,                    !- Hour 21
+    0.01,                    !- Hour 22
+    0.01,                    !- Hour 23
+    0.07;                    !- Hour 24
+
+  Schedule:Day:Hourly,
+    NightZone_OccupationSunday,  !- Name
+    Fraction,                !- Schedule Type Limits Name
+    0.48,                    !- Hour 1
+    0.49,                    !- Hour 2
+    0.49,                    !- Hour 3
+    0.49,                    !- Hour 4
+    0.48,                    !- Hour 5
+    0.46,                    !- Hour 6
+    0.41,                    !- Hour 7
+    0.33,                    !- Hour 8
+    0.21,                    !- Hour 9
+    0.1,                     !- Hour 10
+    0.03,                    !- Hour 11
+    0.01,                    !- Hour 12
+    0.01,                    !- Hour 13
+    0.01,                    !- Hour 14
+    0.02,                    !- Hour 15
+    0.04,                    !- Hour 16
+    0.04,                    !- Hour 17
+    0.03,                    !- Hour 18
+    0.02,                    !- Hour 19
+    0.02,                    !- Hour 20
+    0.01,                    !- Hour 21
+    0,                       !- Hour 22
+    0.01,                    !- Hour 23
+    0.1;                     !- Hour 24
+
+  Schedule:Day:Hourly,
+    NightZone_OccupationThursday,  !- Name
+    Fraction,                !- Schedule Type Limits Name
+    0.57,                    !- Hour 1
+    0.57,                    !- Hour 2
+    0.57,                    !- Hour 3
+    0.56,                    !- Hour 4
+    0.52,                    !- Hour 5
+    0.45,                    !- Hour 6
+    0.34,                    !- Hour 7
+    0.17,                    !- Hour 8
+    0.05,                    !- Hour 9
+    0.01,                    !- Hour 10
+    0.01,                    !- Hour 11
+    0,                       !- Hour 12
+    0,                       !- Hour 13
+    0.01,                    !- Hour 14
+    0.01,                    !- Hour 15
+    0.02,                    !- Hour 16
+    0.02,                    !- Hour 17
+    0.02,                    !- Hour 18
+    0.01,                    !- Hour 19
+    0.01,                    !- Hour 20
+    0.01,                    !- Hour 21
+    0,                       !- Hour 22
+    0.01,                    !- Hour 23
+    0.1;                     !- Hour 24
+
+  Schedule:Day:Hourly,
+    NightZone_OccupationTuesday,  !- Name
+    Fraction,                !- Schedule Type Limits Name
+    0.59,                    !- Hour 1
+    0.59,                    !- Hour 2
+    0.59,                    !- Hour 3
+    0.57,                    !- Hour 4
+    0.53,                    !- Hour 5
+    0.45,                    !- Hour 6
+    0.34,                    !- Hour 7
+    0.17,                    !- Hour 8
+    0.05,                    !- Hour 9
+    0.01,                    !- Hour 10
+    0.01,                    !- Hour 11
+    0.01,                    !- Hour 12
+    0.01,                    !- Hour 13
+    0.01,                    !- Hour 14
+    0.01,                    !- Hour 15
+    0.02,                    !- Hour 16
+    0.02,                    !- Hour 17
+    0.02,                    !- Hour 18
+    0.02,                    !- Hour 19
+    0.02,                    !- Hour 20
+    0.01,                    !- Hour 21
+    0,                       !- Hour 22
+    0.01,                    !- Hour 23
+    0.09;                    !- Hour 24
+
+  Schedule:Day:Hourly,
+    NightZone_OccupationWednesday,  !- Name
+    Fraction,                !- Schedule Type Limits Name
+    0.58,                    !- Hour 1
+    0.58,                    !- Hour 2
+    0.57,                    !- Hour 3
+    0.54,                    !- Hour 4
+    0.46,                    !- Hour 5
+    0.37,                    !- Hour 6
+    0.27,                    !- Hour 7
+    0.14,                    !- Hour 8
+    0.05,                    !- Hour 9
+    0.02,                    !- Hour 10
+    0.01,                    !- Hour 11
+    0.01,                    !- Hour 12
+    0,                       !- Hour 13
+    0.01,                    !- Hour 14
+    0.01,                    !- Hour 15
+    0.02,                    !- Hour 16
+    0.02,                    !- Hour 17
+    0.03,                    !- Hour 18
+    0.02,                    !- Hour 19
+    0.01,                    !- Hour 20
+    0.01,                    !- Hour 21
+    0,                       !- Hour 22
+    0.02,                    !- Hour 23
+    0;                       !- Hour 24
+
+  Schedule:Day:Hourly,
+    NightZone_Temperature,   !- Name
+    Any Number,              !- Schedule Type Limits Name
+    18,                      !- Hour 1
+    18,                      !- Hour 2
+    18,                      !- Hour 3
+    18,                      !- Hour 4
+    18,                      !- Hour 5
+    18,                      !- Hour 6
+    18,                      !- Hour 7
+    18,                      !- Hour 8
+    18,                      !- Hour 9
+    18,                      !- Hour 10
+    18,                      !- Hour 11
+    18,                      !- Hour 12
+    18,                      !- Hour 13
+    18,                      !- Hour 14
+    18,                      !- Hour 15
+    18,                      !- Hour 16
+    18,                      !- Hour 17
+    18,                      !- Hour 18
+    18,                      !- Hour 19
+    18,                      !- Hour 20
+    18,                      !- Hour 21
+    18,                      !- Hour 22
+    18,                      !- Hour 23
+    18;                      !- Hour 24
+
+  Schedule:Day:Hourly,
+    NightZone_VentilationDay,!- Name
+    Fraction,                !- Schedule Type Limits Name
+    1,                       !- Hour 1
+    1,                       !- Hour 2
+    1,                       !- Hour 3
+    1,                       !- Hour 4
+    1,                       !- Hour 5
+    1,                       !- Hour 6
+    1,                       !- Hour 7
+    1,                       !- Hour 8
+    1,                       !- Hour 9
+    1,                       !- Hour 10
+    1,                       !- Hour 11
+    1,                       !- Hour 12
+    1,                       !- Hour 13
+    1,                       !- Hour 14
+    1,                       !- Hour 15
+    1,                       !- Hour 16
+    1,                       !- Hour 17
+    1,                       !- Hour 18
+    1,                       !- Hour 19
+    1,                       !- Hour 20
+    1,                       !- Hour 21
+    1,                       !- Hour 22
+    1,                       !- Hour 23
+    1;                       !- Hour 24
+
+  Schedule:Day:Hourly,
+    PDissip_Friday,          !- Name
+    Fraction,                !- Schedule Type Limits Name
+    0.46,                    !- Hour 1
+    0.42,                    !- Hour 2
+    0.39,                    !- Hour 3
+    0.38,                    !- Hour 4
+    0.37,                    !- Hour 5
+    0.37,                    !- Hour 6
+    0.45,                    !- Hour 7
+    0.58,                    !- Hour 8
+    0.56,                    !- Hour 9
+    0.51,                    !- Hour 10
+    0.54,                    !- Hour 11
+    0.63,                    !- Hour 12
+    0.67,                    !- Hour 13
+    0.61,                    !- Hour 14
+    0.58,                    !- Hour 15
+    0.51,                    !- Hour 16
+    0.48,                    !- Hour 17
+    0.55,                    !- Hour 18
+    0.7,                     !- Hour 19
+    0.96,                    !- Hour 20
+    0.94,                    !- Hour 21
+    0.89,                    !- Hour 22
+    0.78,                    !- Hour 23
+    0.68;                    !- Hour 24
+
+  Schedule:Day:Hourly,
+    PDissip_Holidays,        !- Name
+    Fraction,                !- Schedule Type Limits Name
+    0,                       !- Hour 1
+    0,                       !- Hour 2
+    0,                       !- Hour 3
+    0,                       !- Hour 4
+    0,                       !- Hour 5
+    0,                       !- Hour 6
+    0,                       !- Hour 7
+    0,                       !- Hour 8
+    0,                       !- Hour 9
+    0,                       !- Hour 10
+    0,                       !- Hour 11
+    0,                       !- Hour 12
+    0,                       !- Hour 13
+    0,                       !- Hour 14
+    0,                       !- Hour 15
+    0,                       !- Hour 16
+    0,                       !- Hour 17
+    0,                       !- Hour 18
+    0,                       !- Hour 19
+    0,                       !- Hour 20
+    0,                       !- Hour 21
+    0,                       !- Hour 22
+    0,                       !- Hour 23
+    0;                       !- Hour 24
+
+  Schedule:Day:Hourly,
+    PDissip_Monday,          !- Name
+    Fraction,                !- Schedule Type Limits Name
+    0.47,                    !- Hour 1
+    0.42,                    !- Hour 2
+    0.39,                    !- Hour 3
+    0.36,                    !- Hour 4
+    0.36,                    !- Hour 5
+    0.37,                    !- Hour 6
+    0.44,                    !- Hour 7
+    0.56,                    !- Hour 8
+    0.54,                    !- Hour 9
+    0.49,                    !- Hour 10
+    0.52,                    !- Hour 11
+    0.64,                    !- Hour 12
+    0.7,                     !- Hour 13
+    0.62,                    !- Hour 14
+    0.61,                    !- Hour 15
+    0.54,                    !- Hour 16
+    0.51,                    !- Hour 17
+    0.56,                    !- Hour 18
+    0.7,                     !- Hour 19
+    1,                       !- Hour 20
+    0.96,                    !- Hour 21
+    0.92,                    !- Hour 22
+    0.82,                    !- Hour 23
+    0.71;                    !- Hour 24
+
+  Schedule:Day:Hourly,
+    PDissip_Saturday,        !- Name
+    Fraction,                !- Schedule Type Limits Name
+    0.45,                    !- Hour 1
+    0.42,                    !- Hour 2
+    0.38,                    !- Hour 3
+    0.35,                    !- Hour 4
+    0.35,                    !- Hour 5
+    0.35,                    !- Hour 6
+    0.42,                    !- Hour 7
+    0.52,                    !- Hour 8
+    0.56,                    !- Hour 9
+    0.58,                    !- Hour 10
+    0.67,                    !- Hour 11
+    0.79,                    !- Hour 12
+    0.86,                    !- Hour 13
+    0.72,                    !- Hour 14
+    0.7,                     !- Hour 15
+    0.61,                    !- Hour 16
+    0.58,                    !- Hour 17
+    0.6,                     !- Hour 18
+    0.75,                    !- Hour 19
+    0.97,                    !- Hour 20
+    0.9,                     !- Hour 21
+    0.85,                    !- Hour 22
+    0.75,                    !- Hour 23
+    0.62;                    !- Hour 24
+
+  Schedule:Day:Hourly,
+    PDissip_Sunday,          !- Name
+    Fraction,                !- Schedule Type Limits Name
+    0.42,                    !- Hour 1
+    0.4,                     !- Hour 2
+    0.37,                    !- Hour 3
+    0.35,                    !- Hour 4
+    0.34,                    !- Hour 5
+    0.34,                    !- Hour 6
+    0.38,                    !- Hour 7
+    0.48,                    !- Hour 8
+    0.53,                    !- Hour 9
+    0.58,                    !- Hour 10
+    0.7,                     !- Hour 11
+    0.87,                    !- Hour 12
+    0.87,                    !- Hour 13
+    0.7,                     !- Hour 14
+    0.68,                    !- Hour 15
+    0.61,                    !- Hour 16
+    0.56,                    !- Hour 17
+    0.59,                    !- Hour 18
+    0.73,                    !- Hour 19
+    0.94,                    !- Hour 20
+    0.93,                    !- Hour 21
+    0.9,                     !- Hour 22
+    0.8,                     !- Hour 23
+    0.68;                    !- Hour 24
+
+  Schedule:Day:Hourly,
+    PDissip_Thursday,        !- Name
+    Fraction,                !- Schedule Type Limits Name
+    0.44,                    !- Hour 1
+    0.4,                     !- Hour 2
+    0.38,                    !- Hour 3
+    0.37,                    !- Hour 4
+    0.35,                    !- Hour 5
+    0.37,                    !- Hour 6
+    0.46,                    !- Hour 7
+    0.59,                    !- Hour 8
+    0.56,                    !- Hour 9
+    0.49,                    !- Hour 10
+    0.51,                    !- Hour 11
+    0.63,                    !- Hour 12
+    0.68,                    !- Hour 13
+    0.63,                    !- Hour 14
+    0.6,                     !- Hour 15
+    0.54,                    !- Hour 16
+    0.5,                     !- Hour 17
+    0.55,                    !- Hour 18
+    0.71,                    !- Hour 19
+    0.99,                    !- Hour 20
+    0.95,                    !- Hour 21
+    0.91,                    !- Hour 22
+    0.79,                    !- Hour 23
+    0.68;                    !- Hour 24
+
+  Schedule:Day:Hourly,
+    PDissip_Tuesday,         !- Name
+    Fraction,                !- Schedule Type Limits Name
+    0.45,                    !- Hour 1
+    0.41,                    !- Hour 2
+    0.39,                    !- Hour 3
+    0.37,                    !- Hour 4
+    0.37,                    !- Hour 5
+    0.38,                    !- Hour 6
+    0.47,                    !- Hour 7
+    0.59,                    !- Hour 8
+    0.57,                    !- Hour 9
+    0.5,                     !- Hour 10
+    0.53,                    !- Hour 11
+    0.66,                    !- Hour 12
+    0.73,                    !- Hour 13
+    0.64,                    !- Hour 14
+    0.6,                     !- Hour 15
+    0.52,                    !- Hour 16
+    0.5,                     !- Hour 17
+    0.59,                    !- Hour 18
+    0.77,                    !- Hour 19
+    0.99,                    !- Hour 20
+    0.97,                    !- Hour 21
+    0.94,                    !- Hour 22
+    0.81,                    !- Hour 23
+    0.7;                     !- Hour 24
+
+  Schedule:Day:Hourly,
+    PDissip_Wednesday,       !- Name
+    Fraction,                !- Schedule Type Limits Name
+    0.48,                    !- Hour 1
+    0.43,                    !- Hour 2
+    0.39,                    !- Hour 3
+    0.37,                    !- Hour 4
+    0.37,                    !- Hour 5
+    0.37,                    !- Hour 6
+    0.44,                    !- Hour 7
+    0.55,                    !- Hour 8
+    0.53,                    !- Hour 9
+    0.49,                    !- Hour 10
+    0.5,                     !- Hour 11
+    0.63,                    !- Hour 12
+    0.68,                    !- Hour 13
+    0.62,                    !- Hour 14
+    0.61,                    !- Hour 15
+    0.54,                    !- Hour 16
+    0.51,                    !- Hour 17
+    0.56,                    !- Hour 18
+    0.74,                    !- Hour 19
+    0.98,                    !- Hour 20
+    0.93,                    !- Hour 21
+    0.9,                     !- Hour 22
+    0.78,                    !- Hour 23
+    0.68;                    !- Hour 24
+
+!-   ===========  ALL OBJECTS IN CLASS: SCHEDULE:DAY:INTERVAL ===========
+
+  Schedule:Day:Interval,
+    OccultationHiver,        !- Name
+    Fraction,                !- Schedule Type Limits Name
+    No,                      !- Interpolate to Timestep
+    07:00,                   !- Time 1
+    1,                       !- Value Until Time 1
+    22:00,                   !- Time 2
+    0,                       !- Value Until Time 2
+    24:00,                   !- Time 3
+    1;                       !- Value Until Time 3
+
+  Schedule:Day:Interval,
+    OccultationEte_Est,      !- Name
+    Fraction,                !- Schedule Type Limits Name
+    No,                      !- Interpolate to Timestep
+    07:00,                   !- Time 1
+    1,                       !- Value Until Time 1
+    08:00,                   !- Time 2
+    0,                       !- Value Until Time 2
+    13:00,                   !- Time 3
+    1,                       !- Value Until Time 3
+    18:00,                   !- Time 4
+    0.7,                     !- Value Until Time 4
+    22:00,                   !- Time 5
+    0,                       !- Value Until Time 5
+    24:00,                   !- Time 6
+    1;                       !- Value Until Time 6
+
+  Schedule:Day:Interval,
+    OccultationEte_Ouest,    !- Name
+    Fraction,                !- Schedule Type Limits Name
+    No,                      !- Interpolate to Timestep
+    07:00,                   !- Time 1
+    1,                       !- Value Until Time 1
+    08:00,                   !- Time 2
+    0,                       !- Value Until Time 2
+    13:00,                   !- Time 3
+    0.7,                     !- Value Until Time 3
+    18:00,                   !- Time 4
+    1,                       !- Value Until Time 4
+    22:00,                   !- Time 5
+    0,                       !- Value Until Time 5
+    24:00,                   !- Time 6
+    1;                       !- Value Until Time 6
+
+  Schedule:Day:Interval,
+    OccultationEte_Sud1,     !- Name
+    Fraction,                !- Schedule Type Limits Name
+    No,                      !- Interpolate to Timestep
+    07:00,                   !- Time 1
+    1,                       !- Value Until Time 1
+    08:00,                   !- Time 2
+    0,                       !- Value Until Time 2
+    18:00,                   !- Time 3
+    1,                       !- Value Until Time 3
+    22:00,                   !- Time 4
+    0,                       !- Value Until Time 4
+    24:00,                   !- Time 5
+    1;                       !- Value Until Time 5
+
+  Schedule:Day:Interval,
+    OccultationEte_Sud2,     !- Name
+    Fraction,                !- Schedule Type Limits Name
+    No,                      !- Interpolate to Timestep
+    07:00,                   !- Time 1
+    1,                       !- Value Until Time 1
+    11:00,                   !- Time 2
+    0,                       !- Value Until Time 2
+    15:00,                   !- Time 3
+    1,                       !- Value Until Time 3
+    22:00,                   !- Time 4
+    0,                       !- Value Until Time 4
+    24:00,                   !- Time 5
+    1;                       !- Value Until Time 5
+
+!-   ===========  ALL OBJECTS IN CLASS: SCHEDULE:WEEK:DAILY ===========
+
+  Schedule:Week:Daily,
+    DayZone_OccupationWeek,  !- Name
+    DayZone_OccupationSunday,!- Sunday Schedule:Day Name
+    DayZone_OccupationMonday,!- Monday Schedule:Day Name
+    DayZone_OccupationTuesday,  !- Tuesday Schedule:Day Name
+    DayZone_OccupationWednesday,  !- Wednesday Schedule:Day Name
+    DayZone_OccupationThursday,  !- Thursday Schedule:Day Name
+    DayZone_OccupationFriday,!- Friday Schedule:Day Name
+    DayZone_OccupationSaturday,  !- Saturday Schedule:Day Name
+    Holidays_Occupation,     !- Holiday Schedule:Day Name
+    Holidays_Occupation,     !- SummerDesignDay Schedule:Day Name
+    Holidays_Occupation,     !- WinterDesignDay Schedule:Day Name
+    Holidays_Occupation,     !- CustomDay1 Schedule:Day Name
+    Holidays_Occupation;     !- CustomDay2 Schedule:Day Name
+
+  Schedule:Week:Daily,
+    DayZone_Temperature,     !- Name
+    DayZone_TemperatureSunday,  !- Sunday Schedule:Day Name
+    DayZone_TemperatureMonday,  !- Monday Schedule:Day Name
+    DayZone_TemperatureTuesday,  !- Tuesday Schedule:Day Name
+    DayZone_TemperatureWednesday,  !- Wednesday Schedule:Day Name
+    DayZone_TemperatureThursday,  !- Thursday Schedule:Day Name
+    DayZone_TemperatureFriday,  !- Friday Schedule:Day Name
+    DayZone_TemperatureSaturday,  !- Saturday Schedule:Day Name
+    Holidays_Temperature,    !- Holiday Schedule:Day Name
+    Holidays_Temperature,    !- SummerDesignDay Schedule:Day Name
+    Holidays_Temperature,    !- WinterDesignDay Schedule:Day Name
+    Holidays_Temperature,    !- CustomDay1 Schedule:Day Name
+    Holidays_Temperature;    !- CustomDay2 Schedule:Day Name
+
+  Schedule:Week:Daily,
+    NightZone_Temperature,   !- Name
+    NightZone_Temperature,   !- Sunday Schedule:Day Name
+    NightZone_Temperature,   !- Monday Schedule:Day Name
+    NightZone_Temperature,   !- Tuesday Schedule:Day Name
+    NightZone_Temperature,   !- Wednesday Schedule:Day Name
+    NightZone_Temperature,   !- Thursday Schedule:Day Name
+    NightZone_Temperature,   !- Friday Schedule:Day Name
+    NightZone_Temperature,   !- Saturday Schedule:Day Name
+    Holidays_Temperature,    !- Holiday Schedule:Day Name
+    Holidays_Temperature,    !- SummerDesignDay Schedule:Day Name
+    Holidays_Temperature,    !- WinterDesignDay Schedule:Day Name
+    Holidays_Temperature,    !- CustomDay1 Schedule:Day Name
+    Holidays_Temperature;    !- CustomDay2 Schedule:Day Name
+
+  Schedule:Week:Daily,
+    PDissip_Week,            !- Name
+    PDissip_Sunday,          !- Sunday Schedule:Day Name
+    PDissip_Monday,          !- Monday Schedule:Day Name
+    PDissip_Tuesday,         !- Tuesday Schedule:Day Name
+    PDissip_Wednesday,       !- Wednesday Schedule:Day Name
+    PDissip_Thursday,        !- Thursday Schedule:Day Name
+    PDissip_Friday,          !- Friday Schedule:Day Name
+    PDissip_Saturday,        !- Saturday Schedule:Day Name
+    PDissip_Holidays,        !- Holiday Schedule:Day Name
+    PDissip_Holidays,        !- SummerDesignDay Schedule:Day Name
+    PDissip_Holidays,        !- WinterDesignDay Schedule:Day Name
+    PDissip_Holidays,        !- CustomDay1 Schedule:Day Name
+    PDissip_Holidays;        !- CustomDay2 Schedule:Day Name
+
+  Schedule:Week:Daily,
+    NightZone_Occupation,    !- Name
+    NightZone_OccupationSunday,  !- Sunday Schedule:Day Name
+    NightZone_OccupationMonday,  !- Monday Schedule:Day Name
+    NightZone_OccupationTuesday,  !- Tuesday Schedule:Day Name
+    NightZone_OccupationWednesday,  !- Wednesday Schedule:Day Name
+    NightZone_OccupationThursday,  !- Thursday Schedule:Day Name
+    NightZone_OccupationFriday,  !- Friday Schedule:Day Name
+    NightZone_OccupationSaturday,  !- Saturday Schedule:Day Name
+    Holidays_Occupation,     !- Holiday Schedule:Day Name
+    Holidays_Occupation,     !- SummerDesignDay Schedule:Day Name
+    Holidays_Occupation,     !- WinterDesignDay Schedule:Day Name
+    Holidays_Occupation,     !- CustomDay1 Schedule:Day Name
+    Holidays_Occupation;     !- CustomDay2 Schedule:Day Name
+
+!-   ===========  ALL OBJECTS IN CLASS: SCHEDULE:WEEK:COMPACT ===========
+
+  Schedule:Week:Compact,
+    DayZone_VentilationWeek, !- Name
+    Weekdays,                !- DayType List 1
+    DayZone_VentilationDay,  !- Schedule:Day Name 1
+    Weekends,                !- DayType List 2
+    DayZone_VentilationDay,  !- Schedule:Day Name 2
+    AllOtherDays,            !- DayType List 3
+    Holidays_VentilationDay; !- Schedule:Day Name 3
+
+  Schedule:Week:Compact,
+    NightZone_VentilationWeek,  !- Name
+    Weekdays,                !- DayType List 1
+    NightZone_VentilationDay,!- Schedule:Day Name 1
+    Weekends,                !- DayType List 2
+    NightZone_VentilationDay,!- Schedule:Day Name 2
+    AllOtherDays,            !- DayType List 3
+    Holidays_VentilationDay; !- Schedule:Day Name 3
+
+  Schedule:Week:Compact,
+    ECS_ScheduleWeek,        !- Name
+    Weekdays,                !- DayType List 1
+    ECSScheduleDay,          !- Schedule:Day Name 1
+    Weekends,                !- DayType List 2
+    ECSScheduleDay,          !- Schedule:Day Name 2
+    AllOtherDays,            !- DayType List 3
+    ECSScheduleHolidays;     !- Schedule:Day Name 3
+
+  Schedule:Week:Compact,
+    OccultationHiver_ScheduleWeek,  !- Name
+    Weekdays,                !- DayType List 1
+    OccultationHiver,        !- Schedule:Day Name 1
+    Weekends,                !- DayType List 2
+    OccultationHiver,        !- Schedule:Day Name 2
+    AllOtherDays,            !- DayType List 3
+    ECSScheduleHolidays;     !- Schedule:Day Name 3
+
+  Schedule:Week:Compact,
+    OccultationEte_ScheduleWeek_Est,  !- Name
+    Weekdays,                !- DayType List 1
+    OccultationEte_Est,      !- Schedule:Day Name 1
+    Weekends,                !- DayType List 2
+    OccultationEte_Est,      !- Schedule:Day Name 2
+    AllOtherDays,            !- DayType List 3
+    ECSScheduleHolidays;     !- Schedule:Day Name 3
+
+  Schedule:Week:Compact,
+    OccultationEte_ScheduleWeek_Ouest,  !- Name
+    Weekdays,                !- DayType List 1
+    OccultationEte_Ouest,    !- Schedule:Day Name 1
+    Weekends,                !- DayType List 2
+    OccultationEte_Ouest,    !- Schedule:Day Name 2
+    AllOtherDays,            !- DayType List 3
+    ECSScheduleHolidays;     !- Schedule:Day Name 3
+
+  Schedule:Week:Compact,
+    OccultationEte_ScheduleWeek_Sud1,  !- Name
+    Weekdays,                !- DayType List 1
+    OccultationEte_Sud1,     !- Schedule:Day Name 1
+    Weekends,                !- DayType List 2
+    OccultationEte_Sud1,     !- Schedule:Day Name 2
+    AllOtherDays,            !- DayType List 3
+    ECSScheduleHolidays;     !- Schedule:Day Name 3
+
+  Schedule:Week:Compact,
+    OccultationEte_ScheduleWeek_Sud2,  !- Name
+    Weekdays,                !- DayType List 1
+    OccultationEte_Sud2,     !- Schedule:Day Name 1
+    Weekends,                !- DayType List 2
+    OccultationEte_Sud2,     !- Schedule:Day Name 2
+    AllOtherDays,            !- DayType List 3
+    ECSScheduleHolidays;     !- Schedule:Day Name 3
+
+!-   ===========  ALL OBJECTS IN CLASS: SCHEDULE:YEAR ===========
+
+  Schedule:Year,
+    DayZone_Occupation,      !- Name
+    Any Number,              !- Schedule Type Limits Name
+    DayZone_OccupationWeek,  !- Schedule:Week Name 1
+    1,                       !- Start Month 1
+    1,                       !- Start Day 1
+    12,                      !- End Month 1
+    31;                      !- End Day 1
+
+  Schedule:Year,
+    DayZone_TemperatureYear, !- Name
+    Any Number,              !- Schedule Type Limits Name
+    DayZone_Temperature,     !- Schedule:Week Name 1
+    1,                       !- Start Month 1
+    1,                       !- Start Day 1
+    12,                      !- End Month 1
+    31;                      !- End Day 1
+
+  Schedule:Year,
+    NightZone_Occupation,    !- Name
+    Any Number,              !- Schedule Type Limits Name
+    NightZone_Occupation,    !- Schedule:Week Name 1
+    1,                       !- Start Month 1
+    1,                       !- Start Day 1
+    12,                      !- End Month 1
+    31;                      !- End Day 1
+
+  Schedule:Year,
+    NightZone_TemperatureYear,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+    NightZone_Temperature,   !- Schedule:Week Name 1
+    1,                       !- Start Month 1
+    1,                       !- Start Day 1
+    12,                      !- End Month 1
+    31;                      !- End Day 1
+
+  Schedule:Year,
+    PDissipee,               !- Name
+    Fraction,                !- Schedule Type Limits Name
+    PDissip_Week,            !- Schedule:Week Name 1
+    1,                       !- Start Month 1
+    1,                       !- Start Day 1
+    12,                      !- End Month 1
+    31;                      !- End Day 1
+
+  Schedule:Year,
+    DayZone_Ventilation,     !- Name
+    Fraction,                !- Schedule Type Limits Name
+    DayZone_VentilationWeek, !- Schedule:Week Name 1
+    1,                       !- Start Month 1
+    1,                       !- Start Day 1
+    12,                      !- End Month 1
+    31;                      !- End Day 1
+
+  Schedule:Year,
+    NightZone_Ventilation,   !- Name
+    Fraction,                !- Schedule Type Limits Name
+    NightZone_VentilationWeek,  !- Schedule:Week Name 1
+    1,                       !- Start Month 1
+    1,                       !- Start Day 1
+    12,                      !- End Month 1
+    31;                      !- End Day 1
+
+  Schedule:Year,
+    ECSSchedule,             !- Name
+    Fraction,                !- Schedule Type Limits Name
+    ECS_ScheduleWeek,        !- Schedule:Week Name 1
+    1,                       !- Start Month 1
+    1,                       !- Start Day 1
+    12,                      !- End Month 1
+    31;                      !- End Day 1
+
+  Schedule:Year,
+    Occultation_Est,         !- Name
+    Fraction,                !- Schedule Type Limits Name
+    OccultationHiver_ScheduleWeek,  !- Schedule:Week Name 1
+    1,                       !- Start Month 1
+    1,                       !- Start Day 1
+    5,                       !- End Month 1
+    21,                      !- End Day 1
+    OccultationEte_ScheduleWeek_Est,  !- Schedule:Week Name 2
+    5,                       !- Start Month 2
+    22,                      !- Start Day 2
+    9,                       !- End Month 2
+    23,                      !- End Day 2
+    OccultationHiver_ScheduleWeek,  !- Schedule:Week Name 3
+    9,                       !- Start Month 3
+    24,                      !- Start Day 3
+    12,                      !- End Month 3
+    31;                      !- End Day 3
+
+  Schedule:Year,
+    Occultation_Ouest,       !- Name
+    Fraction,                !- Schedule Type Limits Name
+    OccultationHiver_ScheduleWeek,  !- Schedule:Week Name 1
+    1,                       !- Start Month 1
+    1,                       !- Start Day 1
+    5,                       !- End Month 1
+    21,                      !- End Day 1
+    OccultationEte_ScheduleWeek_Ouest,  !- Schedule:Week Name 2
+    5,                       !- Start Month 2
+    22,                      !- Start Day 2
+    9,                       !- End Month 2
+    23,                      !- End Day 2
+    OccultationHiver_ScheduleWeek,  !- Schedule:Week Name 3
+    9,                       !- Start Month 3
+    24,                      !- Start Day 3
+    12,                      !- End Month 3
+    31;                      !- End Day 3
+
+  Schedule:Year,
+    Occultation_Sud1,        !- Name
+    Fraction,                !- Schedule Type Limits Name
+    OccultationHiver_ScheduleWeek,  !- Schedule:Week Name 1
+    1,                       !- Start Month 1
+    1,                       !- Start Day 1
+    5,                       !- End Month 1
+    21,                      !- End Day 1
+    OccultationEte_ScheduleWeek_Sud1,  !- Schedule:Week Name 2
+    5,                       !- Start Month 2
+    22,                      !- Start Day 2
+    9,                       !- End Month 2
+    23,                      !- End Day 2
+    OccultationHiver_ScheduleWeek,  !- Schedule:Week Name 3
+    9,                       !- Start Month 3
+    24,                      !- Start Day 3
+    12,                      !- End Month 3
+    31;                      !- End Day 3
+
+  Schedule:Year,
+    Occultation_Sud2,        !- Name
+    Fraction,                !- Schedule Type Limits Name
+    OccultationHiver_ScheduleWeek,  !- Schedule:Week Name 1
+    1,                       !- Start Month 1
+    1,                       !- Start Day 1
+    5,                       !- End Month 1
+    21,                      !- End Day 1
+    OccultationEte_ScheduleWeek_Sud2,  !- Schedule:Week Name 2
+    5,                       !- Start Month 2
+    22,                      !- Start Day 2
+    9,                       !- End Month 2
+    23,                      !- End Day 2
+    OccultationHiver_ScheduleWeek,  !- Schedule:Week Name 3
+    9,                       !- Start Month 3
+    24,                      !- Start Day 3
+    12,                      !- End Month 3
+    31;                      !- End Day 3
+
+!-   ===========  ALL OBJECTS IN CLASS: SCHEDULE:COMPACT ===========
+
+  Schedule:Compact,
+    Scenario_Surventilation_nocturne,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 05/20,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,0,          !- Field 3
+    Through: 09/23,          !- Field 5
+    For: Holidays,           !- Field 6
+    Until: 24:00,0,          !- Field 7
+    For: AllOtherDays,       !- Field 9
+    Until: 07:00,1,          !- Field 10
+    Until: 19:00,0,          !- Field 12
+    Until: 24:00,1,          !- Field 14
+    Through: 12/31,          !- Field 16
+    For: AllDays,            !- Field 17
+    Until: 24:00,0;          !- Field 18
+
+  Schedule:Compact,
+    ModeChauffage,           !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 05/20,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,1,          !- Field 3
+    Through: 09/23,          !- Field 5
+    For: AllDays,            !- Field 6
+    Until: 24:00,0,          !- Field 7
+    Through: 12/31,          !- Field 9
+    For: AllDays,            !- Field 10
+    Until: 24:00,1;          !- Field 11
+
+  Schedule:Compact,
+    On,                      !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,1;          !- Field 3
+
+  Schedule:Compact,
+    Off,                     !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,0;          !- Field 3
+
+!-   ===========  ALL OBJECTS IN CLASS: SCHEDULE:CONSTANT ===========
+
+  Schedule:Constant,Permeabilite,Any Number,0.5;
+
+  Schedule:Constant,DayZone_ActivityLevel,Any Number,66.67;
+
+  Schedule:Constant,NightZone_ActivityLevel,Any Number,46.67;
+
+!-   ===========  ALL OBJECTS IN CLASS: MATERIAL ===========
+
+  Material,
+    DalleFlottante 5cm,      !- Name
+    Rough,                   !- Roughness
+    0.05,                    !- Thickness {m}
+    1.667,                   !- Conductivity {W/m-K}
+    2200,                    !- Density {kg/m3}
+    1000,                    !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance
+    0.7,                     !- Solar Absorptance
+    0.7;                     !- Visible Absorptance
+
+  Material,
+    DalleFlottante 12cm,     !- Name
+    Rough,                   !- Roughness
+    0.12,                    !- Thickness {m}
+    1.667,                   !- Conductivity {W/m-K}
+    2200,                    !- Density {kg/m3}
+    1000,                    !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance
+    0.7,                     !- Solar Absorptance
+    0.7;                     !- Visible Absorptance
+
+  Material,
+    PB38Revetu,              !- Name
+    Rough,                   !- Roughness
+    0.045,                   !- Thickness {m}
+    0.038,                   !- Conductivity {W/m-K}
+    60,                      !- Density {kg/m3}
+    1030,                    !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance
+    0.7,                     !- Solar Absorptance
+    0.7;                     !- Visible Absorptance
+
+  Material,
+    Efimur,                  !- Name
+    Rough,                   !- Roughness
+    0.097,                   !- Thickness {m}
+    0.022,                   !- Conductivity {W/m-K}
+    30,                      !- Density {kg/m3}
+    1450,                    !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance
+    0.7,                     !- Solar Absorptance
+    0.7;                     !- Visible Absorptance
+
+  Material,
+    Enduit clair,            !- Name
+    MediumRough,             !- Roughness
+    0.05,                    !- Thickness {m}
+    1,                       !- Conductivity {W/m-K}
+    1800,                    !- Density {kg/m3}
+    500,                     !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance
+    0.7,                     !- Solar Absorptance
+    0.7;                     !- Visible Absorptance
+
+  Material,
+    SISREVESIS50,            !- Name
+    Rough,                   !- Roughness
+    0.05,                    !- Thickness {m}
+    0.022,                   !- Conductivity {W/m-K}
+    30,                      !- Density {kg/m3}
+    1450,                    !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance
+    0.7,                     !- Solar Absorptance
+    0.7;                     !- Visible Absorptance
+
+  Material,
+    ISOCONFORT32,            !- Name
+    Rough,                   !- Roughness
+    0.4,                     !- Thickness {m}
+    0.032,                   !- Conductivity {W/m-K}
+    28,                      !- Density {kg/m3}
+    1030,                    !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance
+    0.6,                     !- Solar Absorptance
+    0.6;                     !- Visible Absorptance
+
+  Material,
+    TMS100,                  !- Name
+    Rough,                   !- Roughness
+    0.1,                     !- Thickness {m}
+    0.022,                   !- Conductivity {W/m-K}
+    30,                      !- Density {kg/m3}
+    1450,                    !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance
+    0.7,                     !- Solar Absorptance
+    0.7;                     !- Visible Absorptance
+
+  Material,
+    Sable,                   !- Name
+    Smooth,                  !- Roughness
+    0.05,                    !- Thickness {m}
+    0.4,                     !- Conductivity {W/m-K}
+    1600,                    !- Density {kg/m3}
+    835,                     !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance
+    0.7,                     !- Solar Absorptance
+    0.7;                     !- Visible Absorptance
+
+  Material,
+    Parpaing creux,          !- Name
+    Rough,                   !- Roughness
+    0.2,                     !- Thickness {m}
+    0.952,                   !- Conductivity {W/m-K}
+    1185,                    !- Density {kg/m3}
+    1080,                    !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance
+    0.7,                     !- Solar Absorptance
+    0.7;                     !- Visible Absorptance
+
+  Material,
+    Placo_13mm,              !- Name
+    MediumRough,             !- Roughness
+    0.013,                   !- Thickness {m}
+    0.25,                    !- Conductivity {W/m-K}
+    825,                     !- Density {kg/m3}
+    1008,                    !- Specific Heat {J/kg-K}
+    0.99999,                 !- Thermal Absorptance
+    0.6,                     !- Solar Absorptance
+    0.6;                     !- Visible Absorptance
+
+  Material,
+    TuileBeton,              !- Name
+    Rough,                   !- Roughness
+    0.12,                    !- Thickness {m}
+    0.134,                   !- Conductivity {W/m-K}
+    1185,                    !- Density {kg/m3}
+    1080,                    !- Specific Heat {J/kg-K}
+    0.99999,                 !- Thermal Absorptance
+    0.6,                     !- Solar Absorptance
+    0.6;                     !- Visible Absorptance
+
+!-   ===========  ALL OBJECTS IN CLASS: MATERIAL:NOMASS ===========
+
+  Material:NoMass,
+    Porte,                   !- Name
+    MediumSmooth,            !- Roughness
+    1,                       !- Thermal Resistance {m2-K/W}
+    0.9,                     !- Thermal Absorptance
+    0.7,                     !- Solar Absorptance
+    0.7;                     !- Visible Absorptance
+
+!-   ===========  ALL OBJECTS IN CLASS: MATERIAL:INFRAREDTRANSPARENT ===========
+
+  Material:InfraredTransparent,
+    IRTMaterial;             !- Name
+
+!-   ===========  ALL OBJECTS IN CLASS: MATERIAL:AIRGAP ===========
+
+  Material:AirGap,
+    F04 Wall air space resistance,  !- Name
+    0.15;                    !- Thermal Resistance {m2-K/W}
+
+  Material:AirGap,
+    F05 Ceiling air space resistance,  !- Name
+    0.18;                    !- Thermal Resistance {m2-K/W}
+
+!-   ===========  ALL OBJECTS IN CLASS: WINDOWMATERIAL:SIMPLEGLAZINGSYSTEM ===========
+
+  WindowMaterial:SimpleGlazingSystem,
+    Verre1_4mm,              !- Name
+    2.4,                     !- U-Factor {W/m2-K}
+    0.63,                    !- Solar Heat Gain Coefficient
+    0.74;                    !- Visible Transmittance
+
+  WindowMaterial:SimpleGlazingSystem,
+    Verre2_4mm,              !- Name
+    2.4,                     !- U-Factor {W/m2-K}
+    0.63,                    !- Solar Heat Gain Coefficient
+    0.74;                    !- Visible Transmittance
+
+  WindowMaterial:SimpleGlazingSystem,
+    Verre4mm,                !- Name
+    1.12,                    !- U-Factor {W/m2-K}
+    0.45,                    !- Solar Heat Gain Coefficient
+    0.56;                    !- Visible Transmittance
+
+  WindowMaterial:SimpleGlazingSystem,
+    Verre_new,               !- Name
+    1.12,                    !- U-Factor {W/m2-K}
+    0.63,                    !- Solar Heat Gain Coefficient
+    0.74;                    !- Visible Transmittance
+
+  WindowMaterial:SimpleGlazingSystem,
+    Verre3_4mm,              !- Name
+    2.4,                     !- U-Factor {W/m2-K}
+    0.63,                    !- Solar Heat Gain Coefficient
+    0.74;                    !- Visible Transmittance
+
+!-   ===========  ALL OBJECTS IN CLASS: WINDOWMATERIAL:GLAZING ===========
+
+  WindowMaterial:Glazing,
+    2vitrages,               !- Name
+    SpectralAverage,         !- Optical Data Type
+    ,                        !- Window Glass Spectral Data Set Name
+    0.028,                   !- Thickness {m}
+    0.82,                    !- Solar Transmittance at Normal Incidence
+    0.12,                    !- Front Side Solar Reflectance at Normal Incidence
+    0.13,                    !- Back Side Solar Reflectance at Normal Incidence
+    0.6,                     !- Visible Transmittance at Normal Incidence
+    0.27,                    !- Front Side Visible Reflectance at Normal Incidence
+    0.27,                    !- Back Side Visible Reflectance at Normal Incidence
+    ,                        !- Infrared Transmittance at Normal Incidence
+    0.83,                    !- Front Side Infrared Hemispherical Emissivity
+    0.84,                    !- Back Side Infrared Hemispherical Emissivity
+    39.28,                   !- Conductivity {W/m-K}
+    1,                       !- Dirt Correction Factor for Solar and Visible Transmittance
+    No;                      !- Solar Diffusing
+
+!-   ===========  ALL OBJECTS IN CLASS: WINDOWMATERIAL:GAS ===========
+
+  WindowMaterial:Gas,
+    Argon16mm,               !- Name
+    Argon,                   !- Gas Type
+    0.016;                   !- Thickness {m}
+
+!-   ===========  ALL OBJECTS IN CLASS: WINDOWMATERIAL:GASMIXTURE ===========
+
+  WindowMaterial:GasMixture,
+    Gas_Argon,               !- Name
+    0.016,                   !- Thickness {m}
+    2,                       !- Number of Gases in Mixture
+    Argon,                   !- Gas 1 Type
+    0.5,                     !- Gas 1 Fraction
+    Argon,                   !- Gas 2 Type
+    0.5;                     !- Gas 2 Fraction
+
+!-   ===========  ALL OBJECTS IN CLASS: WINDOWMATERIAL:SHADE ===========
+
+  WindowMaterial:Shade,
+    VR,                      !- Name
+    0,                       !- Solar Transmittance {dimensionless}
+    0.05,                    !- Solar Reflectance {dimensionless}
+    0,                       !- Visible Transmittance {dimensionless}
+    0.05,                    !- Visible Reflectance {dimensionless}
+    0.9,                     !- Infrared Hemispherical Emissivity {dimensionless}
+    0,                       !- Infrared Transmittance {dimensionless}
+    0.008,                   !- Thickness {m}
+    0.053,                   !- Conductivity {W/m-K}
+    0.04,                    !- Shade to Glass Distance {m}
+    ,                        !- Top Opening Multiplier
+    ,                        !- Bottom Opening Multiplier
+    ,                        !- Left-Side Opening Multiplier
+    ,                        !- Right-Side Opening Multiplier
+    ;                        !- Airflow Permeability {dimensionless}
+
+!-   ===========  ALL OBJECTS IN CLASS: WINDOWMATERIAL:BLIND ===========
+
+  WindowMaterial:Blind,
+    BSO,                     !- Name
+    Horizontal,              !- Slat Orientation
+    0.08,                    !- Slat Width {m}
+    0.08,                    !- Slat Separation {m}
+    0.008,                   !- Slat Thickness {m}
+    45,                      !- Slat Angle {deg}
+    0.053,                   !- Slat Conductivity {W/m-K}
+    0,                       !- Slat Beam Solar Transmittance
+    0.15,                    !- Front Side Slat Beam Solar Reflectance
+    0.15,                    !- Back Side Slat Beam Solar Reflectance
+    ,                        !- Slat Diffuse Solar Transmittance
+    0.15,                    !- Front Side Slat Diffuse Solar Reflectance
+    0.15,                    !- Back Side Slat Diffuse Solar Reflectance
+    0,                       !- Slat Beam Visible Transmittance
+    ,                        !- Front Side Slat Beam Visible Reflectance
+    ,                        !- Back Side Slat Beam Visible Reflectance
+    ,                        !- Slat Diffuse Visible Transmittance
+    ,                        !- Front Side Slat Diffuse Visible Reflectance
+    ,                        !- Back Side Slat Diffuse Visible Reflectance
+    0,                       !- Slat Infrared Hemispherical Transmittance
+    0.9,                     !- Front Side Slat Infrared Hemispherical Emissivity
+    0.9,                     !- Back Side Slat Infrared Hemispherical Emissivity
+    0.11,                    !- Blind to Glass Distance {m}
+    ,                        !- Blind Top Opening Multiplier
+    ,                        !- Blind Bottom Opening Multiplier
+    ,                        !- Blind Left Side Opening Multiplier
+    ,                        !- Blind Right Side Opening Multiplier
+    0,                       !- Minimum Slat Angle {deg}
+    180;                     !- Maximum Slat Angle {deg}
+
+!-   ===========  ALL OBJECTS IN CLASS: MATERIALPROPERTY:GLAZINGSPECTRALDATA ===========
+
+  MaterialProperty:GlazingSpectralData,
+    Saint-Gobain Glass SGG PLANILUX 4mm <PLANILUX 4mm.SGG>,  !- Name
+    0.3,0.005,0.047,0.047,
+    0.305,0.004,0.047,0.047,
+    0.31,0.021,0.047,0.047,
+    0.315,0.067,0.047,0.047,
+    0.32,0.146,0.048,0.048,
+    0.325,0.259,0.05,0.05,
+    0.33,0.391,0.054,0.054,
+    0.335,0.52,0.06,0.06,
+    0.34,0.63,0.066,0.066,
+    0.345,0.715,0.072,0.072,
+    0.35,0.778,0.076,0.076,
+    0.355,0.82,0.079,0.079,
+    0.36,0.849,0.082,0.082,
+    0.365,0.866,0.083,0.083,
+    0.37,0.872,0.083,0.083,
+    0.375,0.87,0.083,0.083,
+    0.38,0.864,0.082,0.082,
+    0.385,0.874,0.083,0.083,
+    0.39,0.883,0.084,0.084,
+    0.395,0.889,0.084,0.084,
+    0.4,0.895,0.084,0.084,
+    0.405,0.895,0.084,0.084,
+    0.41,0.895,0.084,0.084,
+    0.415,0.894,0.084,0.084,
+    0.42,0.893,0.083,0.083,
+    0.425,0.893,0.083,0.083,
+    0.43,0.894,0.083,0.083,
+    0.435,0.894,0.083,0.083,
+    0.44,0.894,0.083,0.083,
+    0.445,0.895,0.083,0.083,
+    0.45,0.896,0.083,0.083,
+    0.455,0.896,0.083,0.083,
+    0.46,0.897,0.083,0.083,
+    0.465,0.899,0.083,0.083,
+    0.47,0.901,0.083,0.083,
+    0.475,0.904,0.083,0.083,
+    0.48,0.906,0.083,0.083,
+    0.485,0.905,0.083,0.083,
+    0.49,0.904,0.083,0.083,
+    0.495,0.903,0.082,0.082,
+    0.5,0.902,0.082,0.082,
+    0.505,0.902,0.082,0.082,
+    0.51,0.903,0.082,0.082,
+    0.515,0.902,0.082,0.082,
+    0.52,0.902,0.082,0.082,
+    0.525,0.903,0.082,0.082,
+    0.53,0.905,0.082,0.082,
+    0.535,0.905,0.082,0.082,
+    0.54,0.906,0.082,0.082,
+    0.545,0.905,0.082,0.082,
+    0.55,0.905,0.082,0.082,
+    0.555,0.904,0.082,0.082,
+    0.56,0.903,0.082,0.082,
+    0.565,0.903,0.081,0.081,
+    0.57,0.903,0.081,0.081,
+    0.575,0.901,0.081,0.081,
+    0.58,0.9,0.081,0.081,
+    0.585,0.898,0.081,0.081,
+    0.59,0.897,0.081,0.081,
+    0.595,0.896,0.081,0.081,
+    0.6,0.896,0.081,0.081,
+    0.605,0.894,0.08,0.08,
+    0.61,0.893,0.08,0.08,
+    0.615,0.891,0.08,0.08,
+    0.62,0.89,0.08,0.08,
+    0.625,0.889,0.08,0.08,
+    0.63,0.887,0.08,0.08,
+    0.635,0.886,0.079,0.079,
+    0.64,0.885,0.079,0.079,
+    0.645,0.883,0.079,0.079,
+    0.65,0.881,0.079,0.079,
+    0.655,0.88,0.079,0.079,
+    0.66,0.879,0.079,0.079,
+    0.665,0.877,0.079,0.079,
+    0.67,0.876,0.078,0.078,
+    0.675,0.874,0.078,0.078,
+    0.68,0.873,0.078,0.078,
+    0.685,0.87,0.078,0.078,
+    0.69,0.868,0.078,0.078,
+    0.695,0.866,0.077,0.077,
+    0.7,0.865,0.077,0.077,
+    0.705,0.863,0.077,0.077,
+    0.71,0.861,0.077,0.077,
+    0.715,0.86,0.077,0.077,
+    0.72,0.858,0.077,0.077,
+    0.725,0.856,0.076,0.076,
+    0.73,0.854,0.076,0.076,
+    0.735,0.853,0.076,0.076,
+    0.74,0.851,0.076,0.076,
+    0.745,0.85,0.076,0.076,
+    0.75,0.848,0.076,0.076,
+    0.755,0.846,0.075,0.075,
+    0.76,0.844,0.075,0.075,
+    0.765,0.843,0.075,0.075,
+    0.77,0.841,0.075,0.075,
+    0.775,0.839,0.075,0.075,
+    0.78,0.837,0.074,0.074,
+    0.785,0.835,0.074,0.074,
+    0.79,0.833,0.074,0.074,
+    0.795,0.831,0.074,0.074,
+    0.8,0.829,0.074,0.074,
+    0.805,0.828,0.074,0.074,
+    0.81,0.826,0.073,0.073,
+    0.815,0.825,0.073,0.073,
+    0.82,0.823,0.073,0.073,
+    0.825,0.822,0.073,0.073,
+    0.83,0.821,0.073,0.073,
+    0.835,0.819,0.073,0.073,
+    0.84,0.818,0.072,0.072,
+    0.845,0.816,0.072,0.072,
+    0.85,0.815,0.072,0.072,
+    0.855,0.814,0.072,0.072,
+    0.86,0.814,0.072,0.072,
+    0.865,0.813,0.072,0.072,
+    0.87,0.812,0.072,0.072,
+    0.875,0.812,0.072,0.072,
+    0.88,0.811,0.072,0.072,
+    0.885,0.81,0.072,0.072,
+    0.89,0.809,0.072,0.072,
+    0.895,0.809,0.072,0.072,
+    0.9,0.808,0.072,0.072,
+    0.905,0.807,0.072,0.072,
+    0.91,0.806,0.072,0.072,
+    0.915,0.805,0.071,0.071,
+    0.92,0.804,0.071,0.071,
+    0.925,0.802,0.071,0.071,
+    0.93,0.801,0.071,0.071,
+    0.935,0.8,0.071,0.071,
+    0.94,0.799,0.071,0.071,
+    0.945,0.798,0.071,0.071,
+    0.95,0.797,0.071,0.071,
+    0.955,0.797,0.071,0.071,
+    0.96,0.796,0.071,0.071,
+    0.965,0.796,0.071,0.071,
+    0.97,0.795,0.071,0.071,
+    0.975,0.795,0.071,0.071,
+    0.98,0.794,0.071,0.071,
+    0.985,0.793,0.07,0.07,
+    0.99,0.793,0.07,0.07,
+    0.995,0.793,0.07,0.07,
+    1,0.792,0.07,0.07,
+    1.005,0.792,0.07,0.07,
+    1.01,0.792,0.07,0.07,
+    1.015,0.792,0.07,0.07,
+    1.02,0.792,0.07,0.07,
+    1.025,0.792,0.07,0.07,
+    1.03,0.791,0.07,0.07,
+    1.035,0.791,0.07,0.07,
+    1.04,0.791,0.07,0.07,
+    1.045,0.791,0.07,0.07,
+    1.05,0.791,0.07,0.07,
+    1.055,0.791,0.07,0.07,
+    1.06,0.791,0.07,0.07,
+    1.065,0.791,0.07,0.07,
+    1.07,0.791,0.07,0.07,
+    1.075,0.791,0.07,0.07,
+    1.08,0.791,0.07,0.07,
+    1.085,0.791,0.07,0.07,
+    1.09,0.791,0.07,0.07,
+    1.095,0.791,0.07,0.07,
+    1.1,0.791,0.07,0.07,
+    1.105,0.791,0.07,0.07,
+    1.11,0.791,0.07,0.07,
+    1.115,0.791,0.07,0.07,
+    1.12,0.791,0.07,0.07,
+    1.125,0.791,0.07,0.07,
+    1.13,0.791,0.07,0.07,
+    1.135,0.791,0.07,0.07,
+    1.14,0.791,0.07,0.07,
+    1.145,0.791,0.07,0.07,
+    1.15,0.791,0.07,0.07,
+    1.155,0.791,0.07,0.07,
+    1.16,0.792,0.07,0.07,
+    1.165,0.792,0.07,0.07,
+    1.17,0.792,0.07,0.07,
+    1.175,0.792,0.07,0.07,
+    1.18,0.793,0.07,0.07,
+    1.185,0.793,0.07,0.07,
+    1.19,0.793,0.07,0.07,
+    1.195,0.794,0.07,0.07,
+    1.2,0.794,0.07,0.07,
+    1.205,0.795,0.07,0.07,
+    1.21,0.795,0.07,0.07,
+    1.215,0.796,0.07,0.07,
+    1.22,0.797,0.07,0.07,
+    1.225,0.797,0.07,0.07,
+    1.23,0.798,0.07,0.07,
+    1.235,0.799,0.07,0.07,
+    1.24,0.8,0.07,0.07,
+    1.245,0.8,0.07,0.07,
+    1.25,0.801,0.07,0.07,
+    1.255,0.801,0.07,0.07,
+    1.26,0.802,0.07,0.07,
+    1.265,0.802,0.07,0.07,
+    1.27,0.803,0.07,0.07,
+    1.275,0.803,0.07,0.07,
+    1.28,0.803,0.07,0.07,
+    1.285,0.804,0.07,0.07,
+    1.29,0.804,0.07,0.07,
+    1.295,0.805,0.07,0.07,
+    1.3,0.805,0.07,0.07,
+    1.305,0.806,0.07,0.07,
+    1.31,0.807,0.071,0.071,
+    1.315,0.808,0.071,0.071,
+    1.32,0.809,0.071,0.071,
+    1.325,0.809,0.071,0.071,
+    1.33,0.81,0.071,0.071,
+    1.335,0.811,0.071,0.071,
+    1.34,0.812,0.071,0.071,
+    1.345,0.813,0.071,0.071,
+    1.35,0.814,0.071,0.071,
+    1.355,0.815,0.071,0.071,
+    1.36,0.815,0.071,0.071,
+    1.365,0.816,0.071,0.071,
+    1.37,0.817,0.071,0.071,
+    1.375,0.817,0.071,0.071,
+    1.38,0.818,0.071,0.071,
+    1.385,0.819,0.071,0.071,
+    1.39,0.82,0.071,0.071,
+    1.395,0.82,0.071,0.071,
+    1.4,0.821,0.071,0.071,
+    1.405,0.822,0.071,0.071,
+    1.41,0.823,0.071,0.071,
+    1.415,0.824,0.071,0.071,
+    1.42,0.825,0.072,0.072,
+    1.425,0.826,0.072,0.072,
+    1.43,0.827,0.072,0.072,
+    1.435,0.828,0.072,0.072,
+    1.44,0.829,0.072,0.072,
+    1.445,0.83,0.072,0.072,
+    1.45,0.831,0.072,0.072,
+    1.455,0.832,0.072,0.072,
+    1.46,0.833,0.072,0.072,
+    1.465,0.834,0.072,0.072,
+    1.47,0.835,0.072,0.072,
+    1.475,0.837,0.072,0.072,
+    1.48,0.838,0.072,0.072,
+    1.485,0.839,0.072,0.072,
+    1.49,0.84,0.072,0.072,
+    1.495,0.841,0.072,0.072,
+    1.5,0.842,0.073,0.073,
+    1.505,0.843,0.073,0.073,
+    1.51,0.843,0.073,0.073,
+    1.515,0.844,0.073,0.073,
+    1.52,0.844,0.073,0.073,
+    1.525,0.845,0.073,0.073,
+    1.53,0.846,0.073,0.073,
+    1.535,0.846,0.073,0.073,
+    1.54,0.847,0.073,0.073,
+    1.545,0.847,0.073,0.073,
+    1.55,0.848,0.073,0.073,
+    1.555,0.849,0.073,0.073,
+    1.56,0.849,0.073,0.073,
+    1.565,0.849,0.073,0.073,
+    1.57,0.85,0.073,0.073,
+    1.575,0.85,0.073,0.073,
+    1.58,0.851,0.073,0.073,
+    1.585,0.851,0.073,0.073,
+    1.59,0.852,0.073,0.073,
+    1.595,0.852,0.073,0.073,
+    1.6,0.853,0.073,0.073,
+    1.605,0.853,0.073,0.073,
+    1.61,0.854,0.073,0.073,
+    1.615,0.854,0.073,0.073,
+    1.62,0.854,0.073,0.073,
+    1.625,0.854,0.073,0.073,
+    1.63,0.855,0.073,0.073,
+    1.635,0.855,0.073,0.073,
+    1.64,0.855,0.073,0.073,
+    1.645,0.856,0.073,0.073,
+    1.65,0.856,0.073,0.073,
+    1.655,0.856,0.073,0.073,
+    1.66,0.856,0.073,0.073,
+    1.665,0.857,0.073,0.073,
+    1.67,0.857,0.073,0.073,
+    1.675,0.857,0.073,0.073,
+    1.68,0.857,0.073,0.073,
+    1.685,0.857,0.073,0.073,
+    1.69,0.858,0.073,0.073,
+    1.695,0.858,0.073,0.073,
+    1.7,0.858,0.073,0.073,
+    1.705,0.858,0.073,0.073,
+    1.71,0.858,0.073,0.073,
+    1.715,0.857,0.073,0.073,
+    1.72,0.857,0.073,0.073,
+    1.725,0.857,0.073,0.073,
+    1.73,0.857,0.073,0.073,
+    1.735,0.857,0.073,0.073,
+    1.74,0.856,0.073,0.073,
+    1.745,0.856,0.073,0.073,
+    1.75,0.856,0.073,0.073,
+    1.755,0.856,0.073,0.073,
+    1.76,0.856,0.073,0.073,
+    1.765,0.856,0.073,0.073,
+    1.77,0.856,0.073,0.073,
+    1.775,0.856,0.073,0.073,
+    1.78,0.856,0.073,0.073,
+    1.785,0.856,0.073,0.073,
+    1.79,0.856,0.073,0.073,
+    1.795,0.856,0.073,0.073,
+    1.8,0.856,0.073,0.073,
+    1.805,0.856,0.073,0.073,
+    1.81,0.856,0.073,0.073,
+    1.815,0.856,0.073,0.073,
+    1.82,0.856,0.073,0.073,
+    1.825,0.856,0.073,0.073,
+    1.83,0.855,0.073,0.073,
+    1.835,0.855,0.072,0.072,
+    1.84,0.855,0.072,0.072,
+    1.845,0.855,0.072,0.072,
+    1.85,0.855,0.072,0.072,
+    1.855,0.855,0.072,0.072,
+    1.86,0.854,0.072,0.072,
+    1.865,0.854,0.072,0.072,
+    1.87,0.854,0.072,0.072,
+    1.875,0.853,0.072,0.072,
+    1.88,0.853,0.072,0.072,
+    1.885,0.853,0.072,0.072,
+    1.89,0.853,0.072,0.072,
+    1.895,0.852,0.072,0.072,
+    1.9,0.852,0.072,0.072,
+    1.905,0.852,0.072,0.072,
+    1.91,0.852,0.072,0.072,
+    1.915,0.851,0.072,0.072,
+    1.92,0.851,0.072,0.072,
+    1.925,0.851,0.072,0.072,
+    1.93,0.851,0.072,0.072,
+    1.935,0.851,0.072,0.072,
+    1.94,0.85,0.072,0.072,
+    1.945,0.85,0.072,0.072,
+    1.95,0.85,0.072,0.072,
+    1.955,0.85,0.072,0.072,
+    1.96,0.851,0.072,0.072,
+    1.965,0.851,0.072,0.072,
+    1.97,0.851,0.072,0.072,
+    1.975,0.851,0.072,0.072,
+    1.98,0.852,0.072,0.072,
+    1.985,0.852,0.072,0.072,
+    1.99,0.852,0.072,0.072,
+    1.995,0.853,0.072,0.072,
+    2,0.853,0.072,0.072,
+    2.005,0.853,0.072,0.072,
+    2.01,0.853,0.072,0.072,
+    2.015,0.853,0.072,0.072,
+    2.02,0.853,0.072,0.072,
+    2.025,0.852,0.072,0.072,
+    2.03,0.852,0.072,0.072,
+    2.035,0.852,0.072,0.072,
+    2.04,0.852,0.072,0.072,
+    2.045,0.852,0.072,0.072,
+    2.05,0.852,0.072,0.072,
+    2.055,0.852,0.072,0.072,
+    2.06,0.852,0.072,0.072,
+    2.065,0.852,0.071,0.071,
+    2.07,0.852,0.071,0.071,
+    2.075,0.852,0.071,0.071,
+    2.08,0.852,0.071,0.071,
+    2.085,0.852,0.071,0.071,
+    2.09,0.852,0.071,0.071,
+    2.095,0.852,0.071,0.071,
+    2.1,0.852,0.071,0.071,
+    2.105,0.851,0.071,0.071,
+    2.11,0.85,0.071,0.071,
+    2.115,0.849,0.071,0.071,
+    2.12,0.848,0.071,0.071,
+    2.125,0.847,0.071,0.071,
+    2.13,0.847,0.071,0.071,
+    2.135,0.846,0.071,0.071,
+    2.14,0.845,0.071,0.071,
+    2.145,0.844,0.071,0.071,
+    2.15,0.843,0.071,0.071,
+    2.155,0.842,0.07,0.07,
+    2.16,0.841,0.07,0.07,
+    2.165,0.84,0.07,0.07,
+    2.17,0.839,0.07,0.07,
+    2.175,0.839,0.07,0.07,
+    2.18,0.838,0.07,0.07,
+    2.185,0.837,0.07,0.07,
+    2.19,0.836,0.07,0.07,
+    2.195,0.835,0.07,0.07,
+    2.2,0.834,0.07,0.07,
+    2.205,0.834,0.07,0.07,
+    2.21,0.835,0.07,0.07,
+    2.215,0.835,0.07,0.07,
+    2.22,0.835,0.07,0.07,
+    2.225,0.835,0.07,0.07,
+    2.23,0.836,0.07,0.07,
+    2.235,0.836,0.07,0.07,
+    2.24,0.836,0.07,0.07,
+    2.245,0.836,0.07,0.07,
+    2.25,0.837,0.07,0.07,
+    2.255,0.837,0.07,0.07,
+    2.26,0.837,0.07,0.07,
+    2.265,0.837,0.07,0.07,
+    2.27,0.838,0.07,0.07,
+    2.275,0.838,0.07,0.07,
+    2.28,0.838,0.07,0.07,
+    2.285,0.838,0.07,0.07,
+    2.29,0.839,0.07,0.07,
+    2.295,0.839,0.07,0.07,
+    2.3,0.839,0.07,0.07,
+    2.305,0.839,0.07,0.07,
+    2.31,0.839,0.07,0.07,
+    2.315,0.839,0.07,0.07,
+    2.32,0.839,0.07,0.07,
+    2.325,0.839,0.07,0.07,
+    2.33,0.839,0.07,0.07,
+    2.335,0.839,0.07,0.07,
+    2.34,0.839,0.07,0.07,
+    2.345,0.839,0.07,0.07,
+    2.35,0.839,0.07,0.07,
+    2.355,0.838,0.07,0.07,
+    2.36,0.838,0.07,0.07,
+    2.365,0.838,0.07,0.07,
+    2.37,0.838,0.07,0.07,
+    2.375,0.838,0.069,0.069,
+    2.38,0.838,0.069,0.069,
+    2.385,0.838,0.069,0.069,
+    2.39,0.838,0.069,0.069,
+    2.395,0.838,0.069,0.069,
+    2.4,0.838,0.069,0.069,
+    2.405,0.837,0.069,0.069,
+    2.41,0.836,0.069,0.069,
+    2.415,0.835,0.069,0.069,
+    2.42,0.834,0.069,0.069,
+    2.425,0.833,0.069,0.069,
+    2.43,0.832,0.069,0.069,
+    2.435,0.831,0.069,0.069,
+    2.44,0.83,0.069,0.069,
+    2.445,0.829,0.069,0.069,
+    2.45,0.828,0.068,0.068,
+    2.455,0.826,0.068,0.068,
+    2.46,0.825,0.068,0.068,
+    2.465,0.824,0.068,0.068,
+    2.47,0.823,0.068,0.068,
+    2.475,0.822,0.068,0.068,
+    2.48,0.821,0.068,0.068,
+    2.485,0.82,0.068,0.068,
+    2.49,0.819,0.068,0.068,
+    2.495,0.818,0.068,0.068,
+    2.5,0.817,0.068,0.068;
+
+  MaterialProperty:GlazingSpectralData,
+    Saint-Gobain Glass SGG PLANITHERM ULTRA N 4mm <PLANITHERM ULTRA N 4mm.SGG>,  !- Name
+    0.3,0,0.233,0.047,
+    0.305,0,0.215,0.047,
+    0.31,0.001,0.2,0.047,
+    0.315,0.009,0.188,0.047,
+    0.32,0.033,0.177,0.048,
+    0.325,0.084,0.165,0.053,
+    0.33,0.163,0.153,0.064,
+    0.335,0.261,0.141,0.082,
+    0.34,0.361,0.131,0.102,
+    0.345,0.452,0.123,0.118,
+    0.35,0.533,0.116,0.13,
+    0.355,0.6,0.111,0.137,
+    0.36,0.652,0.107,0.139,
+    0.365,0.69,0.102,0.138,
+    0.37,0.716,0.098,0.134,
+    0.375,0.73,0.092,0.128,
+    0.38,0.741,0.087,0.122,
+    0.385,0.762,0.083,0.118,
+    0.39,0.782,0.079,0.115,
+    0.395,0.796,0.075,0.112,
+    0.4,0.81,0.072,0.109,
+    0.41,0.821,0.065,0.102,
+    0.42,0.826,0.06,0.096,
+    0.43,0.833,0.055,0.091,
+    0.44,0.838,0.053,0.087,
+    0.45,0.845,0.05,0.084,
+    0.46,0.853,0.049,0.08,
+    0.47,0.857,0.047,0.078,
+    0.48,0.86,0.046,0.075,
+    0.49,0.863,0.045,0.073,
+    0.5,0.864,0.044,0.07,
+    0.51,0.865,0.043,0.067,
+    0.52,0.866,0.042,0.065,
+    0.53,0.865,0.041,0.062,
+    0.54,0.864,0.04,0.06,
+    0.55,0.862,0.039,0.057,
+    0.56,0.86,0.039,0.055,
+    0.57,0.856,0.038,0.053,
+    0.58,0.851,0.038,0.051,
+    0.59,0.846,0.037,0.05,
+    0.6,0.84,0.038,0.049,
+    0.61,0.834,0.038,0.048,
+    0.62,0.828,0.039,0.047,
+    0.63,0.82,0.04,0.047,
+    0.64,0.812,0.041,0.047,
+    0.65,0.804,0.043,0.047,
+    0.66,0.796,0.045,0.048,
+    0.67,0.787,0.048,0.049,
+    0.68,0.778,0.052,0.051,
+    0.69,0.768,0.056,0.053,
+    0.7,0.758,0.06,0.056,
+    0.71,0.747,0.065,0.059,
+    0.72,0.735,0.07,0.062,
+    0.73,0.723,0.076,0.065,
+    0.74,0.711,0.081,0.069,
+    0.75,0.699,0.087,0.072,
+    0.76,0.686,0.094,0.076,
+    0.77,0.674,0.101,0.08,
+    0.78,0.661,0.107,0.084,
+    0.79,0.648,0.115,0.088,
+    0.8,0.636,0.123,0.092,
+    0.81,0.624,0.131,0.097,
+    0.82,0.613,0.139,0.101,
+    0.83,0.601,0.148,0.106,
+    0.84,0.59,0.156,0.111,
+    0.85,0.578,0.164,0.115,
+    0.86,0.568,0.174,0.121,
+    0.87,0.558,0.184,0.126,
+    0.88,0.547,0.194,0.132,
+    0.89,0.537,0.204,0.138,
+    0.9,0.527,0.214,0.143,
+    0.91,0.517,0.223,0.148,
+    0.92,0.507,0.233,0.152,
+    0.93,0.497,0.242,0.156,
+    0.94,0.487,0.252,0.161,
+    0.95,0.477,0.262,0.165,
+    0.96,0.469,0.272,0.171,
+    0.97,0.462,0.282,0.177,
+    0.98,0.455,0.292,0.184,
+    0.99,0.448,0.302,0.19,
+    1,0.44,0.313,0.196,
+    1.05,0.402,0.359,0.221,
+    1.1,0.376,0.403,0.25,
+    1.15,0.343,0.445,0.274,
+    1.2,0.319,0.479,0.297,
+    1.25,0.298,0.515,0.324,
+    1.3,0.279,0.546,0.35,
+    1.35,0.257,0.573,0.376,
+    1.4,0.244,0.597,0.404,
+    1.45,0.229,0.621,0.432,
+    1.5,0.219,0.642,0.46,
+    1.55,0.203,0.658,0.483,
+    1.6,0.196,0.674,0.505,
+    1.65,0.185,0.691,0.522,
+    1.7,0.172,0.707,0.536,
+    1.75,0.163,0.719,0.548,
+    1.8,0.155,0.732,0.556,
+    1.85,0.145,0.743,0.563,
+    1.9,0.136,0.754,0.569,
+    1.95,0.125,0.762,0.576,
+    2,0.124,0.772,0.584,
+    2.05,0.115,0.778,0.59,
+    2.1,0.112,0.788,0.6,
+    2.15,0.104,0.796,0.593,
+    2.2,0.097,0.804,0.585,
+    2.25,0.093,0.807,0.595,
+    2.3,0.09,0.811,0.604,
+    2.35,0.085,0.815,0.608,
+    2.4,0.079,0.82,0.611,
+    2.45,0.074,0.824,0.603,
+    2.5,0.069,0.828,0.594;
+
+!-   ===========  ALL OBJECTS IN CLASS: CONSTRUCTION ===========
+
+  Construction,
+    Mur exterieur,           !- Name
+    Enduit clair,            !- Outside Layer
+    Parpaing creux,          !- Layer 2
+    Efimur,                  !- Layer 3
+    PB38Revetu,              !- Layer 4
+    Placo_13mm;              !- Layer 5
+
+  Construction,
+    Mur exterieur Reversed,  !- Name
+    Placo_13mm,              !- Outside Layer
+    PB38Revetu,              !- Layer 2
+    Efimur,                  !- Layer 3
+    Parpaing creux,          !- Layer 4
+    Enduit clair;            !- Layer 5
+
+  Construction,
+    Mur combles,             !- Name
+    Parpaing creux,          !- Outside Layer
+    Placo_13mm;              !- Layer 2
+
+  Construction,
+    Mur VS,                  !- Name
+    Parpaing creux;          !- Outside Layer
+
+  Construction,
+    Mur garage,              !- Name
+    Parpaing creux,          !- Outside Layer
+    Placo_13mm;              !- Layer 2
+
+  Construction,
+    Plafond etage,           !- Name
+    ISOCONFORT32,            !- Outside Layer
+    SISREVESIS50,            !- Layer 2
+    Placo_13mm;              !- Layer 3
+
+  Construction,
+    Plafond etage Reversed,  !- Name
+    Placo_13mm,              !- Outside Layer
+    SISREVESIS50,            !- Layer 2
+    ISOCONFORT32;            !- Layer 3
+
+  Construction,
+    Intermediaire,           !- Name
+    ISOCONFORT32,            !- Outside Layer
+    Placo_13mm;              !- Layer 2
+
+  Construction,
+    Intermediaire Reversed,  !- Name
+    Placo_13mm,              !- Outside Layer
+    ISOCONFORT32;            !- Layer 2
+
+  Construction,
+    Plancher bas RDC,        !- Name
+    TMS100,                  !- Outside Layer
+    DalleFlottante 5cm;      !- Layer 2
+
+  Construction,
+    Plancher bas RDC Reveserd,  !- Name
+    DalleFlottante 5cm,      !- Outside Layer
+    TMS100;                  !- Layer 2
+
+  Construction,
+    Plancher bas VS,         !- Name
+    Sable;                   !- Outside Layer
+
+  Construction,
+    Plancher bas garage,     !- Name
+    DalleFlottante 12cm;     !- Outside Layer
+
+  Construction,
+    Toiture,                 !- Name
+    TuileBeton;              !- Outside Layer
+
+  Construction,
+    Porte,                   !- Name
+    Porte;                   !- Outside Layer
+
+  Construction,
+    fenetreDV,               !- Name
+    Verre1_4mm,              !- Outside Layer
+    Gas_Argon,               !- Layer 2
+    Verre2_4mm;              !- Layer 3
+
+  Construction,
+    fenetreTV,               !- Name
+    Verre1_4mm,              !- Outside Layer
+    Gas_Argon,               !- Layer 2
+    Verre2_4mm,              !- Layer 3
+    Gas_Argon,               !- Layer 4
+    Verre3_4mm;              !- Layer 5
+
+  Construction,
+    Mur combles Reversed,    !- Name
+    Placo_13mm,              !- Outside Layer
+    Parpaing creux;          !- Layer 2
+
+!-   ===========  ALL OBJECTS IN CLASS: GLOBALGEOMETRYRULES ===========
+
+  GlobalGeometryRules,
+    UpperLeftCorner,         !- Starting Vertex Position
+    Counterclockwise,        !- Vertex Entry Direction
+    Relative,                !- Coordinate System
+    Relative,                !- Daylighting Reference Point Coordinate System
+    Relative;                !- Rectangular Surface Coordinate System
+
+!-   ===========  ALL OBJECTS IN CLASS: ZONE ===========
+
+  Zone,
+    DayZone,                 !- Name
+    0.0,                     !- Direction of Relative North {deg}
+    0.0,                     !- X Origin {m}
+    0.0,                     !- Y Origin {m}
+    -0.000249,               !- Z Origin {m}
+    ,                        !- Type
+    1;                       !- Multiplier
+
+  Zone,
+    VideSanitaireZone,       !- Name
+    0.0,                     !- Direction of Relative North {deg}
+    0.0,                     !- X Origin {m}
+    -0.010441,               !- Y Origin {m}
+    -3.157175,               !- Z Origin {m}
+    ,                        !- Type
+    1;                       !- Multiplier
+
+  Zone,
+    ComblesZone,             !- Name
+    0.0,                     !- Direction of Relative North {deg}
+    1.017528,                !- X Origin {m}
+    2.113559,                !- Y Origin {m}
+    5.249751,                !- Z Origin {m}
+    ,                        !- Type
+    1;                       !- Multiplier
+
+  Zone,
+    NightZone,               !- Name
+    0.0,                     !- Direction of Relative North {deg}
+    0.0,                     !- X Origin {m}
+    0.0,                     !- Y Origin {m}
+    -0.000249,               !- Z Origin {m}
+    ,                        !- Type
+    1;                       !- Multiplier
+
+  Zone,
+    GarageZone,              !- Name
+    0.0,                     !- Direction of Relative North {deg}
+    -10.91485,               !- X Origin {m}
+    0.0,                     !- Y Origin {m}
+    -0.000249,               !- Z Origin {m}
+    ,                        !- Type
+    1;                       !- Multiplier
+
+!-   ===========  ALL OBJECTS IN CLASS: BUILDINGSURFACE:DETAILED ===========
+
+  BuildingSurface:Detailed,
+    Plancherbas_DayZone,     !- Name
+    Floor,                   !- Surface Type
+    Plancher bas RDC,        !- Construction Name
+    DayZone,                 !- Zone Name
+    ,                        !- Space Name
+    Surface,                 !- Outside Boundary Condition
+    Plafond_VideSanitaireZone,  !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    0.0,                     !- View Factor to Ground
+    4,                       !- Number of Vertices
+    0.000000000000,8.800000000000,0.000000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    0.000000000000,0.000000000000,0.000000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    -6.200000000000,0.000000000000,0.000000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    -6.200000000000,8.800000000000,0.000000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Facade_N_DayZone,        !- Name
+    Wall,                    !- Surface Type
+    Mur exterieur,           !- Construction Name
+    DayZone,                 !- Zone Name
+    ,                        !- Space Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    0.000000000000,8.800000000000,2.500000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    0.000000000000,8.800000000000,0.000000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    -6.200000000000,8.800000000000,0.000000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    -6.200000000000,8.800000000000,2.500000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Plafond_DayZone,         !- Name
+    Ceiling,                 !- Surface Type
+    Intermediaire,           !- Construction Name
+    DayZone,                 !- Zone Name
+    ,                        !- Space Name
+    Surface,                 !- Outside Boundary Condition
+    Plancherbas_NightZone,   !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    0.0,                     !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -6.200000000000,8.800000000000,2.500000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    -6.200000000000,0.000000000000,2.500000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    0.000000000000,0.000000000000,2.500000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    0.000000000000,8.800000000000,2.500000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Facade_O_DayZone,        !- Name
+    Wall,                    !- Surface Type
+    Mur exterieur,           !- Construction Name
+    DayZone,                 !- Zone Name
+    ,                        !- Space Name
+    Surface,                 !- Outside Boundary Condition
+    Facade_E_1_GarageZone,   !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    0.0,                     !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -6.200000000000,8.800000000000,2.500000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    -6.200000000000,8.800000000000,0.000000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    -6.200000000000,0.000000000000,0.000000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    -6.200000000000,0.000000000000,2.500000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Facade_E_DayZone,        !- Name
+    Wall,                    !- Surface Type
+    Mur exterieur,           !- Construction Name
+    DayZone,                 !- Zone Name
+    ,                        !- Space Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    0.000000000000,0.000000000000,2.500000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    0.000000000000,0.000000000000,0.000000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    0.000000000000,8.800000000000,0.000000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    0.000000000000,8.800000000000,2.500000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Facade_S_DayZone,        !- Name
+    Wall,                    !- Surface Type
+    Mur exterieur,           !- Construction Name
+    DayZone,                 !- Zone Name
+    ,                        !- Space Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -6.200000000000,0.000000000000,2.500000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    -6.200000000000,0.000000000000,0.000000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    0.000000000000,0.000000000000,0.000000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    0.000000000000,0.000000000000,2.500000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Plafond_VideSanitaireZone,  !- Name
+    Ceiling,                 !- Surface Type
+    Plancher bas RDC Reveserd,  !- Construction Name
+    VideSanitaireZone,       !- Zone Name
+    ,                        !- Space Name
+    Surface,                 !- Outside Boundary Condition
+    Plancherbas_DayZone,     !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    0.0,                     !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -6.200000000000,8.810441000000,3.156926000000,  !- X,Y,Z ==> Vertex 1 {m}
+    -6.200000000000,0.010441000000,3.156926000000,  !- X,Y,Z ==> Vertex 2 {m}
+    0.000000000000,0.010441000000,3.156926000000,  !- X,Y,Z ==> Vertex 3 {m}
+    0.000000000000,8.810441000000,3.156926000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Plancherbas_VideSanitaireZone,  !- Name
+    Floor,                   !- Surface Type
+    Plancher bas VS,         !- Construction Name
+    VideSanitaireZone,       !- Zone Name
+    ,                        !- Space Name
+    Ground,                  !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    0.0,                     !- View Factor to Ground
+    4,                       !- Number of Vertices
+    0.000000000000,8.810441000000,1.366926000000,  !- X,Y,Z ==> Vertex 1 {m}
+    0.000000000000,0.010441000000,1.366926000000,  !- X,Y,Z ==> Vertex 2 {m}
+    -6.200000000000,0.010441000000,1.366926000000,  !- X,Y,Z ==> Vertex 3 {m}
+    -6.200000000000,8.810441000000,1.366926000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Facade_N_VideSanitaireZone,  !- Name
+    Wall,                    !- Surface Type
+    Mur VS,                  !- Construction Name
+    VideSanitaireZone,       !- Zone Name
+    ,                        !- Space Name
+    Ground,                  !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    0.0,                     !- View Factor to Ground
+    4,                       !- Number of Vertices
+    0.000000000000,8.810441000000,3.156926000000,  !- X,Y,Z ==> Vertex 1 {m}
+    0.000000000000,8.810441000000,1.366926000000,  !- X,Y,Z ==> Vertex 2 {m}
+    -6.200000000000,8.810441000000,1.366926000000,  !- X,Y,Z ==> Vertex 3 {m}
+    -6.200000000000,8.810441000000,3.156926000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Facade_S_VideSanitaireZone,  !- Name
+    Wall,                    !- Surface Type
+    Mur VS,                  !- Construction Name
+    VideSanitaireZone,       !- Zone Name
+    ,                        !- Space Name
+    Ground,                  !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    0.0,                     !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -6.200000000000,0.010441000000,3.156926000000,  !- X,Y,Z ==> Vertex 1 {m}
+    -6.200000000000,0.010441000000,1.366926000000,  !- X,Y,Z ==> Vertex 2 {m}
+    0.000000000000,0.010441000000,1.366926000000,  !- X,Y,Z ==> Vertex 3 {m}
+    0.000000000000,0.010441000000,3.156926000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Facade_O_VideSanitaireZone,  !- Name
+    Wall,                    !- Surface Type
+    Mur VS,                  !- Construction Name
+    VideSanitaireZone,       !- Zone Name
+    ,                        !- Space Name
+    Ground,                  !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    0.0,                     !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -6.200000000000,8.810441000000,3.156926000000,  !- X,Y,Z ==> Vertex 1 {m}
+    -6.200000000000,8.810441000000,1.366926000000,  !- X,Y,Z ==> Vertex 2 {m}
+    -6.200000000000,0.010441000000,1.366926000000,  !- X,Y,Z ==> Vertex 3 {m}
+    -6.200000000000,0.010441000000,3.156926000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Facade_E_VideSanitaireZone,  !- Name
+    Wall,                    !- Surface Type
+    Mur VS,                  !- Construction Name
+    VideSanitaireZone,       !- Zone Name
+    ,                        !- Space Name
+    Ground,                  !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    0.0,                     !- View Factor to Ground
+    4,                       !- Number of Vertices
+    0.000000000000,0.010441000000,3.156926000000,  !- X,Y,Z ==> Vertex 1 {m}
+    0.000000000000,0.010441000000,1.366926000000,  !- X,Y,Z ==> Vertex 2 {m}
+    0.000000000000,8.810441000000,1.366926000000,  !- X,Y,Z ==> Vertex 3 {m}
+    0.000000000000,8.810441000000,3.156926000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Facade_O_2_ComblesZone,  !- Name
+    Wall,                    !- Surface Type
+    Mur combles,             !- Construction Name
+    ComblesZone,             !- Zone Name
+    ,                        !- Space Name
+    Surface,                 !- Outside Boundary Condition
+    Facade_E_3_GarageZone,   !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    0.0,                     !- View Factor to Ground
+    3,                       !- Number of Vertices
+    -7.226720591216,3.440612501716,-0.250000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    -7.226720591216,1.130612501716,-0.250000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    -7.226720591216,2.290612501716,0.640000000000;  !- X,Y,Z ==> Vertex 3 {m}
+
+  BuildingSurface:Detailed,
+    Toit_N_ComblesZone,      !- Name
+    Roof,                    !- Surface Type
+    Toiture,                 !- Construction Name
+    ComblesZone,             !- Zone Name
+    ,                        !- Space Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -1.026720591216,2.290612501716,3.150000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    -1.026720591216,6.690612501716,-0.250000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    -7.226720591216,6.690612501716,-0.250000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    -7.226720591216,2.290612501716,3.150000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Facade_E_ComblesZone,    !- Name
+    Wall,                    !- Surface Type
+    Mur combles,             !- Construction Name
+    ComblesZone,             !- Zone Name
+    ,                        !- Space Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    3,                       !- Number of Vertices
+    -1.026720591216,-2.109387498284,-0.250000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    -1.026720591216,6.690612501716,-0.250000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    -1.026720591216,2.290612501716,3.150000000000;  !- X,Y,Z ==> Vertex 3 {m}
+
+  BuildingSurface:Detailed,
+    Toit_S_ComblesZone,      !- Name
+    Roof,                    !- Surface Type
+    Toiture,                 !- Construction Name
+    ComblesZone,             !- Zone Name
+    ,                        !- Space Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -7.226720591216,2.290612501716,3.150000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    -7.226720591216,-2.109387498284,-0.250000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    -1.026720591216,-2.109387498284,-0.250000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    -1.026720591216,2.290612501716,3.150000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Plancherbas_ComblesZone, !- Name
+    Floor,                   !- Surface Type
+    Plafond etage Reversed,  !- Construction Name
+    ComblesZone,             !- Zone Name
+    ,                        !- Space Name
+    Surface,                 !- Outside Boundary Condition
+    Plafond_NightZone,       !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    0.0,                     !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -1.026720591216,6.690612501716,-0.250000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    -1.026720591216,-2.109387498284,-0.250000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    -7.226720591216,-2.109387498284,-0.250000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    -7.226720591216,6.690612501716,-0.250000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Plafond_NightZone,       !- Name
+    Ceiling,                 !- Surface Type
+    Plafond etage,           !- Construction Name
+    NightZone,               !- Zone Name
+    ,                        !- Space Name
+    Surface,                 !- Outside Boundary Condition
+    Plancherbas_ComblesZone, !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    0.0,                     !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -6.200000000000,8.800000000000,5.000000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    -6.200000000000,0.000000000000,5.000000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    0.000000000000,0.000000000000,5.000000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    0.000000000000,8.800000000000,5.000000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Facade_O_3_NightZone,    !- Name
+    Wall,                    !- Surface Type
+    Mur exterieur,           !- Construction Name
+    NightZone,               !- Zone Name
+    ,                        !- Space Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    3,                       !- Number of Vertices
+    -6.200000000000,3.244837758112,5.000000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    -6.200000000000,0.000000000000,2.500000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    -6.200000000000,0.000000000000,5.000000000000;  !- X,Y,Z ==> Vertex 3 {m}
+
+  BuildingSurface:Detailed,
+    Plancherbas_NightZone,   !- Name
+    Floor,                   !- Surface Type
+    Intermediaire Reversed,  !- Construction Name
+    NightZone,               !- Zone Name
+    ,                        !- Space Name
+    Surface,                 !- Outside Boundary Condition
+    Plafond_DayZone,         !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    0.0,                     !- View Factor to Ground
+    4,                       !- Number of Vertices
+    0.000000000000,8.800000000000,2.500000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    0.000000000000,0.000000000000,2.500000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    -6.200000000000,0.000000000000,2.500000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    -6.200000000000,8.800000000000,2.500000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Facade_N_NightZone,      !- Name
+    Wall,                    !- Surface Type
+    Mur exterieur,           !- Construction Name
+    NightZone,               !- Zone Name
+    ,                        !- Space Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    0.000000000000,8.800000000000,5.000000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    0.000000000000,8.800000000000,2.500000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    -6.200000000000,8.800000000000,2.500000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    -6.200000000000,8.800000000000,5.000000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Facade_S_NightZone,      !- Name
+    Wall,                    !- Surface Type
+    Mur exterieur,           !- Construction Name
+    NightZone,               !- Zone Name
+    ,                        !- Space Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -6.200000000000,0.000000000000,5.000000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    -6.200000000000,0.000000000000,2.500000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    0.000000000000,0.000000000000,2.500000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    0.000000000000,0.000000000000,5.000000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Facade_E_NightZone,      !- Name
+    Wall,                    !- Surface Type
+    Mur exterieur,           !- Construction Name
+    NightZone,               !- Zone Name
+    ,                        !- Space Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    0.0,                     !- View Factor to Ground
+    4,                       !- Number of Vertices
+    0.000000000000,0.000000000000,5.000000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    0.000000000000,0.000000000000,2.500000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    0.000000000000,8.800000000000,2.500000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    0.000000000000,8.800000000000,5.000000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Plancherbas_GarageZone,  !- Name
+    Floor,                   !- Surface Type
+    Plancher bas garage,     !- Construction Name
+    GarageZone,              !- Zone Name
+    ,                        !- Space Name
+    Ground,                  !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    0.0,                     !- View Factor to Ground
+    4,                       !- Number of Vertices
+    4.714850000000,8.800000000000,0.000000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    4.714850000000,0.000000000000,0.000000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    0.334850000000,0.000000000000,0.000000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    2.224850000000,8.800000000000,0.000000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Facade_N_GarageZone,     !- Name
+    Wall,                    !- Surface Type
+    Mur garage,              !- Construction Name
+    GarageZone,              !- Zone Name
+    ,                        !- Space Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    4.714850000000,8.800000000000,2.500000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    4.714850000000,8.800000000000,0.000000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    2.224850000000,8.800000000000,0.000000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    2.224850000000,8.800000000000,2.500000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Toit_S_GarageZone,       !- Name
+    Roof,                    !- Surface Type
+    Toiture,                 !- Construction Name
+    GarageZone,              !- Zone Name
+    ,                        !- Space Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    1.279850000000,4.400000000000,5.890000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    0.334850000000,0.000000000000,2.500000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    4.714850000000,0.000000000000,2.500000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    4.714850000000,4.400000000000,5.890000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Facade_E_3_GarageZone,   !- Name
+    Wall,                    !- Surface Type
+    Mur combles Reversed,    !- Construction Name
+    GarageZone,              !- Zone Name
+    ,                        !- Space Name
+    Surface,                 !- Outside Boundary Condition
+    Facade_O_2_ComblesZone,  !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    0.0,                     !- View Factor to Ground
+    3,                       !- Number of Vertices
+    4.714850000000,3.244837758112,5.000000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    4.714850000000,5.555162241888,5.000000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    4.714850000000,4.400000000000,5.890000000000;  !- X,Y,Z ==> Vertex 3 {m}
+
+  BuildingSurface:Detailed,
+    Facade_S_GarageZone,     !- Name
+    Wall,                    !- Surface Type
+    Mur garage,              !- Construction Name
+    GarageZone,              !- Zone Name
+    ,                        !- Space Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    0.334850000000,0.000000000000,2.500000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    0.334850000000,0.000000000000,0.000000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    4.714850000000,0.000000000000,0.000000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    4.714850000000,0.000000000000,2.500000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Facade_O_GarageZone,     !- Name
+    Wall,                    !- Surface Type
+    Mur garage,              !- Construction Name
+    GarageZone,              !- Zone Name
+    ,                        !- Space Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    5,                       !- Number of Vertices
+    2.224850000000,8.800000000000,2.500000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    2.224850000000,8.800000000000,0.000000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    0.334850000000,0.000000000000,0.000000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    0.334850000000,0.000000000000,2.500000000000,  !- X,Y,Z ==> Vertex 4 {m}
+    1.279850000000,4.400000000000,5.890000000000;  !- X,Y,Z ==> Vertex 5 {m}
+
+  BuildingSurface:Detailed,
+    Toit_N_GarageZone,       !- Name
+    Roof,                    !- Surface Type
+    Toiture,                 !- Construction Name
+    GarageZone,              !- Zone Name
+    ,                        !- Space Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    4.714850000000,4.400000000000,5.890000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    4.714850000000,8.800000000000,2.500000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    2.224850000000,8.800000000000,2.500000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    1.279850000000,4.400000000000,5.890000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Facade_O_2_NightZone,    !- Name
+    Wall,                    !- Surface Type
+    Mur exterieur,           !- Construction Name
+    NightZone,               !- Zone Name
+    ,                        !- Space Name
+    Surface,                 !- Outside Boundary Condition
+    Facade_E_2_GarageZone,   !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    0.0,                     !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -6.200000000000,8.800000000000,2.500000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    -6.200000000000,0.000000000000,2.500000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    -6.200000000000,3.244837758112,5.000000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    -6.200000000000,5.555162241888,5.000000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Facade_O_1_NightZone,    !- Name
+    Wall,                    !- Surface Type
+    Mur exterieur,           !- Construction Name
+    NightZone,               !- Zone Name
+    ,                        !- Space Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    3,                       !- Number of Vertices
+    -6.200000000000,8.800000000000,5.000000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    -6.200000000000,8.800000000000,2.500000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    -6.200000000000,5.555162241888,5.000000000000;  !- X,Y,Z ==> Vertex 3 {m}
+
+  BuildingSurface:Detailed,
+    Facade_E_1_GarageZone,   !- Name
+    Wall,                    !- Surface Type
+    Mur exterieur Reversed,  !- Construction Name
+    GarageZone,              !- Zone Name
+    ,                        !- Space Name
+    Surface,                 !- Outside Boundary Condition
+    Facade_O_DayZone,        !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    0.0,                     !- View Factor to Ground
+    4,                       !- Number of Vertices
+    4.714850000000,0.000000000000,2.500000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    4.714850000000,0.000000000000,0.000000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    4.714850000000,8.800000000000,0.000000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    4.714850000000,8.800000000000,2.500000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Facade_E_2_GarageZone,   !- Name
+    Wall,                    !- Surface Type
+    Mur exterieur Reversed,  !- Construction Name
+    GarageZone,              !- Zone Name
+    ,                        !- Space Name
+    Surface,                 !- Outside Boundary Condition
+    Facade_O_2_NightZone,    !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    0.0,                     !- View Factor to Ground
+    4,                       !- Number of Vertices
+    4.714850000000,0.000000000000,2.500000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    4.714850000000,8.800000000000,2.500000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    4.714850000000,5.555162241888,5.000000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    4.714850000000,3.244837758112,5.000000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  BuildingSurface:Detailed,
+    Facade_O_1_ComblesZone,  !- Name
+    Wall,                    !- Surface Type
+    Mur combles,             !- Construction Name
+    ComblesZone,             !- Zone Name
+    ,                        !- Space Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    3,                       !- Number of Vertices
+    -7.226720591216,6.690612501716,-0.250000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    -7.226720591216,-2.109387498284,-0.250000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    -7.226720591216,2.290612501716,3.150000000000;  !- X,Y,Z ==> Vertex 3 {m}
+
+!-   ===========  ALL OBJECTS IN CLASS: FENESTRATIONSURFACE:DETAILED ===========
+
+  FenestrationSurface:Detailed,
+    f_S_1_DayZone,           !- Name
+    GlassDoor,               !- Surface Type
+    fenetreDV,               !- Construction Name
+    Facade_S_DayZone,        !- Building Surface Name
+    ,                        !- Outside Boundary Condition Object
+    ,                        !- View Factor to Ground
+    ,                        !- Frame and Divider Name
+    ,                        !- Multiplier
+    4,                       !- Number of Vertices
+    -5.170000000000,0.000000000000,2.150000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    -5.170000000000,0.000000000000,0.645000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    -3.970000000000,0.000000000000,0.645000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    -3.970000000000,0.000000000000,2.150000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  FenestrationSurface:Detailed,
+    Porte_S_1_DayZone,       !- Name
+    Door,                    !- Surface Type
+    Porte,                   !- Construction Name
+    Facade_S_DayZone,        !- Building Surface Name
+    ,                        !- Outside Boundary Condition Object
+    ,                        !- View Factor to Ground
+    ,                        !- Frame and Divider Name
+    ,                        !- Multiplier
+    4,                       !- Number of Vertices
+    -2.335000000000,0.000000000000,2.150000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    -2.335000000000,0.000000000000,0.000000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    -1.435000000000,0.000000000000,0.000000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    -1.435000000000,0.000000000000,2.150000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  FenestrationSurface:Detailed,
+    f_N_1_DayZone,           !- Name
+    GlassDoor,               !- Surface Type
+    fenetreTV,               !- Construction Name
+    Facade_N_DayZone,        !- Building Surface Name
+    ,                        !- Outside Boundary Condition Object
+    ,                        !- View Factor to Ground
+    ,                        !- Frame and Divider Name
+    ,                        !- Multiplier
+    4,                       !- Number of Vertices
+    -4.190000000000,8.800000000000,2.150000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    -4.190000000000,8.800000000000,0.000000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    -5.390000000000,8.800000000000,0.000000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    -5.390000000000,8.800000000000,2.150000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  FenestrationSurface:Detailed,
+    f_N_2_DayZone,           !- Name
+    Window,                  !- Surface Type
+    fenetreTV,               !- Construction Name
+    Facade_N_DayZone,        !- Building Surface Name
+    ,                        !- Outside Boundary Condition Object
+    ,                        !- View Factor to Ground
+    ,                        !- Frame and Divider Name
+    ,                        !- Multiplier
+    4,                       !- Number of Vertices
+    -0.810000000000,8.800000000000,2.150000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    -0.810000000000,8.800000000000,0.900000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    -2.010000000000,8.800000000000,0.900000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    -2.010000000000,8.800000000000,2.150000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  FenestrationSurface:Detailed,
+    f_N_2_NightZone,         !- Name
+    Window,                  !- Surface Type
+    fenetreTV,               !- Construction Name
+    Facade_N_NightZone,      !- Building Surface Name
+    ,                        !- Outside Boundary Condition Object
+    ,                        !- View Factor to Ground
+    ,                        !- Frame and Divider Name
+    ,                        !- Multiplier
+    4,                       !- Number of Vertices
+    -0.810000000000,8.800000000000,4.650000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    -0.810000000000,8.800000000000,3.400000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    -2.010000000000,8.800000000000,3.400000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    -2.010000000000,8.800000000000,4.650000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  FenestrationSurface:Detailed,
+    f_S_1_1_NightZone,       !- Name
+    Window,                  !- Surface Type
+    fenetreDV,               !- Construction Name
+    Facade_S_NightZone,      !- Building Surface Name
+    ,                        !- Outside Boundary Condition Object
+    ,                        !- View Factor to Ground
+    ,                        !- Frame and Divider Name
+    ,                        !- Multiplier
+    4,                       !- Number of Vertices
+    -2.478895936687,0.000000000000,4.647271662712,  !- X,Y,Z ==> Vertex 1 {m}
+    -2.478895936687,0.000000000000,3.766880532758,  !- X,Y,Z ==> Vertex 2 {m}
+    -1.278895936687,0.000000000000,3.766880532758,  !- X,Y,Z ==> Vertex 3 {m}
+    -1.278895936687,0.000000000000,4.647271662712;  !- X,Y,Z ==> Vertex 4 {m}
+
+  FenestrationSurface:Detailed,
+    f_N_1_NightZone,         !- Name
+    Window,                  !- Surface Type
+    fenetreTV,               !- Construction Name
+    Facade_N_NightZone,      !- Building Surface Name
+    ,                        !- Outside Boundary Condition Object
+    ,                        !- View Factor to Ground
+    ,                        !- Frame and Divider Name
+    ,                        !- Multiplier
+    4,                       !- Number of Vertices
+    -4.189317044026,8.800000000000,4.652754443192,  !- X,Y,Z ==> Vertex 1 {m}
+    -4.189317044026,8.800000000000,3.402754443192,  !- X,Y,Z ==> Vertex 2 {m}
+    -5.389317044026,8.800000000000,3.402754443192,  !- X,Y,Z ==> Vertex 3 {m}
+    -5.389317044026,8.800000000000,4.652754443192;  !- X,Y,Z ==> Vertex 4 {m}
+
+  FenestrationSurface:Detailed,
+    f_S_2_1_NightZone,       !- Name
+    Window,                  !- Surface Type
+    fenetreDV,               !- Construction Name
+    Facade_S_NightZone,      !- Building Surface Name
+    ,                        !- Outside Boundary Condition Object
+    ,                        !- View Factor to Ground
+    ,                        !- Frame and Divider Name
+    ,                        !- Multiplier
+    4,                       !- Number of Vertices
+    -5.172477112265,0.000000000000,4.648915884152,  !- X,Y,Z ==> Vertex 1 {m}
+    -5.172477112265,0.000000000000,3.766880532758,  !- X,Y,Z ==> Vertex 2 {m}
+    -3.972477112265,0.000000000000,3.766880532758,  !- X,Y,Z ==> Vertex 3 {m}
+    -3.972477112265,0.000000000000,4.648915884152;  !- X,Y,Z ==> Vertex 4 {m}
+
+  FenestrationSurface:Detailed,
+    Porte_S_GarageZone,      !- Name
+    Door,                    !- Surface Type
+    Porte,                   !- Construction Name
+    Facade_S_GarageZone,     !- Building Surface Name
+    ,                        !- Outside Boundary Condition Object
+    ,                        !- View Factor to Ground
+    ,                        !- Frame and Divider Name
+    ,                        !- Multiplier
+    4,                       !- Number of Vertices
+    1.322166225130,0.000000000000,2.150000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    1.322166225130,0.000000000000,0.000000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    3.722166225130,0.000000000000,0.000000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    3.722166225130,0.000000000000,2.150000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+  FenestrationSurface:Detailed,
+    f_S_2_2_NightZone,       !- Name
+    Window,                  !- Surface Type
+    fenetreDV,               !- Construction Name
+    Facade_S_NightZone,      !- Building Surface Name
+    ,                        !- Outside Boundary Condition Object
+    ,                        !- View Factor to Ground
+    ,                        !- Frame and Divider Name
+    ,                        !- Multiplier
+    4,                       !- Number of Vertices
+    -5.172477112265,0.000000000000,3.766880532758,  !- X,Y,Z ==> Vertex 1 {m}
+    -5.172477112265,0.000000000000,3.398915884152,  !- X,Y,Z ==> Vertex 2 {m}
+    -3.972477112265,0.000000000000,3.398915884152,  !- X,Y,Z ==> Vertex 3 {m}
+    -3.972477112265,0.000000000000,3.766880532758;  !- X,Y,Z ==> Vertex 4 {m}
+
+  FenestrationSurface:Detailed,
+    f_S_1_2_NightZone,       !- Name
+    Window,                  !- Surface Type
+    fenetreDV,               !- Construction Name
+    Facade_S_NightZone,      !- Building Surface Name
+    ,                        !- Outside Boundary Condition Object
+    ,                        !- View Factor to Ground
+    ,                        !- Frame and Divider Name
+    ,                        !- Multiplier
+    4,                       !- Number of Vertices
+    -2.478895936687,0.000000000000,3.766880532758,  !- X,Y,Z ==> Vertex 1 {m}
+    -2.478895936687,0.000000000000,3.397271662712,  !- X,Y,Z ==> Vertex 2 {m}
+    -1.278895936687,0.000000000000,3.397271662712,  !- X,Y,Z ==> Vertex 3 {m}
+    -1.278895936687,0.000000000000,3.766880532758;  !- X,Y,Z ==> Vertex 4 {m}
+
+  FenestrationSurface:Detailed,
+    f_S_2_DayZone,           !- Name
+    GlassDoor,               !- Surface Type
+    fenetreDV,               !- Construction Name
+    Facade_S_DayZone,        !- Building Surface Name
+    ,                        !- Outside Boundary Condition Object
+    ,                        !- View Factor to Ground
+    ,                        !- Frame and Divider Name
+    ,                        !- Multiplier
+    4,                       !- Number of Vertices
+    -5.170000000000,0.000000000000,0.645000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    -5.170000000000,0.000000000000,0.000000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    -3.970000000000,0.000000000000,0.000000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    -3.970000000000,0.000000000000,0.645000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+!-   ===========  ALL OBJECTS IN CLASS: WINDOWSHADINGCONTROL ===========
+
+  WindowShadingControl,
+    VRControl_Sud1-DayZone,  !- Name
+    DayZone,                 !- Zone Name
+    1,                       !- Shading Control Sequence Number
+    ExteriorShade,           !- Shading Type
+    ,                        !- Construction with Shading Name
+    OnIfScheduleAllows,      !- Shading Control Type
+    Occultation_Sud1,        !- Schedule Name
+    ,                        !- Setpoint {W/m2, W or deg C}
+    Yes,                     !- Shading Control Is Scheduled
+    No,                      !- Glare Control Is Active
+    VR,                      !- Shading Device Material Name
+    ,                        !- Type of Slat Angle Control for Blinds
+    ,                        !- Slat Angle Schedule Name
+    ,                        !- Setpoint 2 {W/m2 or deg C}
+    ,                        !- Daylighting Control Object Name
+    Sequential,              !- Multiple Surface Control Type
+    f_S_1_DayZone;           !- Fenestration Surface 1 Name
+
+  WindowShadingControl,
+    VRControl_Sud1-NightZone,!- Name
+    NightZone,               !- Zone Name
+    1,                       !- Shading Control Sequence Number
+    ExteriorShade,           !- Shading Type
+    ,                        !- Construction with Shading Name
+    OnIfScheduleAllows,      !- Shading Control Type
+    Occultation_Sud1,        !- Schedule Name
+    ,                        !- Setpoint {W/m2, W or deg C}
+    Yes,                     !- Shading Control Is Scheduled
+    No,                      !- Glare Control Is Active
+    VR,                      !- Shading Device Material Name
+    ,                        !- Type of Slat Angle Control for Blinds
+    ,                        !- Slat Angle Schedule Name
+    ,                        !- Setpoint 2 {W/m2 or deg C}
+    ,                        !- Daylighting Control Object Name
+    Sequential,              !- Multiple Surface Control Type
+    f_S_1_1_NightZone,       !- Fenestration Surface 1 Name
+    f_S_2_1_NightZone;       !- Fenestration Surface 2 Name
+
+  WindowShadingControl,
+    VRControl_Sud2-NightZone,!- Name
+    NightZone,               !- Zone Name
+    2,                       !- Shading Control Sequence Number
+    ExteriorShade,           !- Shading Type
+    ,                        !- Construction with Shading Name
+    OnIfScheduleAllows,      !- Shading Control Type
+    Occultation_Sud2,        !- Schedule Name
+    ,                        !- Setpoint {W/m2, W or deg C}
+    Yes,                     !- Shading Control Is Scheduled
+    No,                      !- Glare Control Is Active
+    VR,                      !- Shading Device Material Name
+    ,                        !- Type of Slat Angle Control for Blinds
+    ,                        !- Slat Angle Schedule Name
+    ,                        !- Setpoint 2 {W/m2 or deg C}
+    ,                        !- Daylighting Control Object Name
+    Sequential,              !- Multiple Surface Control Type
+    f_S_2_2_NightZone,       !- Fenestration Surface 1 Name
+    f_S_1_2_NightZone;       !- Fenestration Surface 2 Name
+
+  WindowShadingControl,
+    VRControl_Sud2-DayZone,  !- Name
+    DayZone,                 !- Zone Name
+    2,                       !- Shading Control Sequence Number
+    ExteriorShade,           !- Shading Type
+    ,                        !- Construction with Shading Name
+    OnIfScheduleAllows,      !- Shading Control Type
+    Occultation_Sud2,        !- Schedule Name
+    ,                        !- Setpoint {W/m2, W or deg C}
+    Yes,                     !- Shading Control Is Scheduled
+    No,                      !- Glare Control Is Active
+    VR,                      !- Shading Device Material Name
+    ,                        !- Type of Slat Angle Control for Blinds
+    ,                        !- Slat Angle Schedule Name
+    ,                        !- Setpoint 2 {W/m2 or deg C}
+    ,                        !- Daylighting Control Object Name
+    Sequential,              !- Multiple Surface Control Type
+    f_S_2_DayZone;           !- Fenestration Surface 1 Name
+
+!-   ===========  ALL OBJECTS IN CLASS: SHADING:ZONE:DETAILED ===========
+
+  Shading:Zone:Detailed,
+    Shading_S_1_NightZone,   !- Name
+    Facade_S_NightZone,      !- Base Surface Name
+    ,                        !- Transmittance Schedule Name
+    4,                       !- Number of Vertices
+    -3.672477112265,0.000000000000,4.748915884152,  !- X,Y,Z ==> Vertex 1 {m}
+    -3.672477112265,-0.495357848884,4.748915884152,  !- X,Y,Z ==> Vertex 2 {m}
+    -5.472477112265,-0.495357848884,4.748915884152,  !- X,Y,Z ==> Vertex 3 {m}
+    -5.472477112265,0.000000000000,4.748915884152;  !- X,Y,Z ==> Vertex 4 {m}
+
+  Shading:Zone:Detailed,
+    Shading_S_2_NightZone,   !- Name
+    Facade_S_NightZone,      !- Base Surface Name
+    ,                        !- Transmittance Schedule Name
+    4,                       !- Number of Vertices
+    -0.982477112265,0.000000000000,4.748915884152,  !- X,Y,Z ==> Vertex 1 {m}
+    -0.982477112265,-0.495357848884,4.748915884152,  !- X,Y,Z ==> Vertex 2 {m}
+    -2.782477112265,-0.495357848884,4.748915884152,  !- X,Y,Z ==> Vertex 3 {m}
+    -2.782477112265,0.000000000000,4.748915884152;  !- X,Y,Z ==> Vertex 4 {m}
+
+  Shading:Zone:Detailed,
+    Shading_S_DayZone,       !- Name
+    Facade_S_DayZone,        !- Base Surface Name
+    ,                        !- Transmittance Schedule Name
+    4,                       !- Number of Vertices
+    -3.670000000000,0.002279807624,2.250000000000,  !- X,Y,Z ==> Vertex 1 {m}
+    -3.670000000000,-0.493078041260,2.250000000000,  !- X,Y,Z ==> Vertex 2 {m}
+    -5.470000000000,-0.493078041260,2.250000000000,  !- X,Y,Z ==> Vertex 3 {m}
+    -5.470000000000,0.002279807624,2.250000000000;  !- X,Y,Z ==> Vertex 4 {m}
+
+!-   ===========  ALL OBJECTS IN CLASS: PEOPLE ===========
+
+  People,
+    DayZone_People,          !- Name
+    DayZone,                 !- Zone or ZoneList or Space or SpaceList Name
+    DayZone_Occupation,      !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    3,                       !- Number of People
+    ,                        !- People per Floor Area {person/m2}
+    ,                        !- Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    ,                        !- Sensible Heat Fraction
+    DayZone_ActivityLevel,   !- Activity Level Schedule Name
+    ,                        !- Carbon Dioxide Generation Rate {m3/s-W}
+    No,                      !- Enable ASHRAE 55 Comfort Warnings
+    ZoneAveraged;            !- Mean Radiant Temperature Calculation Type
+
+  People,
+    NightZone_People,        !- Name
+    NightZone,               !- Zone or ZoneList or Space or SpaceList Name
+    NightZone_Occupation,    !- Number of People Schedule Name
+    People,                  !- Number of People Calculation Method
+    3,                       !- Number of People
+    ,                        !- People per Floor Area {person/m2}
+    ,                        !- Floor Area per Person {m2/person}
+    0.3,                     !- Fraction Radiant
+    ,                        !- Sensible Heat Fraction
+    NightZone_ActivityLevel, !- Activity Level Schedule Name
+    ,                        !- Carbon Dioxide Generation Rate {m3/s-W}
+    No,                      !- Enable ASHRAE 55 Comfort Warnings
+    ZoneAveraged;            !- Mean Radiant Temperature Calculation Type
+
+!-   ===========  ALL OBJECTS IN CLASS: ELECTRICEQUIPMENT ===========
+
+  ElectricEquipment,
+    DZ_PuissDissipee,        !- Name
+    DayZone,                 !- Zone or ZoneList or Space or SpaceList Name
+    PDissipee,               !- Schedule Name
+    EquipmentLevel,          !- Design Level Calculation Method
+    309,                     !- Design Level {W}
+    5,                       !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    ,                        !- Fraction Latent
+    ,                        !- Fraction Radiant
+    ,                        !- Fraction Lost
+    General;                 !- End-Use Subcategory
+
+!-   ===========  ALL OBJECTS IN CLASS: ZONEINFILTRATION:DESIGNFLOWRATE ===========
+
+  ZoneInfiltration:DesignFlowRate,
+    DayZone_Infiltration,    !- Name
+    DayZone,                 !- Zone or ZoneList Name
+    Permeabilite,            !- Schedule Name
+    Flow/Zone,               !- Design Flow Rate Calculation Method
+    0.0096,                  !- Design Flow Rate {m3/s}
+    ,                        !- Flow per Zone Floor Area {m3/s-m2}
+    ,                        !- Flow per Exterior Surface Area {m3/s-m2}
+    ,                        !- Air Changes per Hour {1/hr}
+    1,                       !- Constant Term Coefficient
+    ,                        !- Temperature Term Coefficient
+    ,                        !- Velocity Term Coefficient
+    ;                        !- Velocity Squared Term Coefficient
+
+  ZoneInfiltration:DesignFlowRate,
+    Garage_Infiltration,     !- Name
+    GarageZone,              !- Zone or ZoneList Name
+    Permeabilite,            !- Schedule Name
+    Flow/Zone,               !- Design Flow Rate Calculation Method
+    0.0096,                  !- Design Flow Rate {m3/s}
+    ,                        !- Flow per Zone Floor Area {m3/s-m2}
+    ,                        !- Flow per Exterior Surface Area {m3/s-m2}
+    ,                        !- Air Changes per Hour {1/hr}
+    1,                       !- Constant Term Coefficient
+    ,                        !- Temperature Term Coefficient
+    ,                        !- Velocity Term Coefficient
+    ;                        !- Velocity Squared Term Coefficient
+
+  ZoneInfiltration:DesignFlowRate,
+    NightZone_Infiltration,  !- Name
+    NightZone,               !- Zone or ZoneList Name
+    Permeabilite,            !- Schedule Name
+    Flow/Zone,               !- Design Flow Rate Calculation Method
+    0.0096,                  !- Design Flow Rate {m3/s}
+    ,                        !- Flow per Zone Floor Area {m3/s-m2}
+    ,                        !- Flow per Exterior Surface Area {m3/s-m2}
+    ,                        !- Air Changes per Hour {1/hr}
+    1,                       !- Constant Term Coefficient
+    ,                        !- Temperature Term Coefficient
+    ,                        !- Velocity Term Coefficient
+    ;                        !- Velocity Squared Term Coefficient
+
+  ZoneInfiltration:DesignFlowRate,
+    ComblesZone_Infiltration,!- Name
+    ComblesZone,             !- Zone or ZoneList Name
+    Permeabilite,            !- Schedule Name
+    Flow/Zone,               !- Design Flow Rate Calculation Method
+    0.0096,                  !- Design Flow Rate {m3/s}
+    ,                        !- Flow per Zone Floor Area {m3/s-m2}
+    ,                        !- Flow per Exterior Surface Area {m3/s-m2}
+    ,                        !- Air Changes per Hour {1/hr}
+    1,                       !- Constant Term Coefficient
+    ,                        !- Temperature Term Coefficient
+    ,                        !- Velocity Term Coefficient
+    ;                        !- Velocity Squared Term Coefficient
+
+!-   ===========  ALL OBJECTS IN CLASS: ZONEVENTILATION:DESIGNFLOWRATE ===========
+
+  ZoneVentilation:DesignFlowRate,
+    DZ_Ventilation,          !- Name
+    DayZone,                 !- Zone or ZoneList Name
+    DayZone_Ventilation,     !- Schedule Name
+    Flow/Zone,               !- Design Flow Rate Calculation Method
+    0.00364,                 !- Design Flow Rate {m3/s}
+    ,                        !- Flow Rate per Zone Floor Area {m3/s-m2}
+    ,                        !- Flow Rate per Person {m3/s-person}
+    ,                        !- Air Changes per Hour {1/hr}
+    Balanced,                !- Ventilation Type
+    ,                        !- Fan Pressure Rise {Pa}
+    1,                       !- Fan Total Efficiency
+    1,                       !- Constant Term Coefficient
+    ,                        !- Temperature Term Coefficient
+    ,                        !- Velocity Term Coefficient
+    ,                        !- Velocity Squared Term Coefficient
+    -100,                    !- Minimum Indoor Temperature {C}
+    ,                        !- Minimum Indoor Temperature Schedule Name
+    100,                     !- Maximum Indoor Temperature {C}
+    ,                        !- Maximum Indoor Temperature Schedule Name
+    -100,                    !- Delta Temperature {deltaC}
+    ,                        !- Delta Temperature Schedule Name
+    -100,                    !- Minimum Outdoor Temperature {C}
+    ,                        !- Minimum Outdoor Temperature Schedule Name
+    100,                     !- Maximum Outdoor Temperature {C}
+    ,                        !- Maximum Outdoor Temperature Schedule Name
+    40;                      !- Maximum Wind Speed {m/s}
+
+  ZoneVentilation:DesignFlowRate,
+    NZ_Ventilation,          !- Name
+    NightZone,               !- Zone or ZoneList Name
+    NightZone_Ventilation,   !- Schedule Name
+    Flow/Zone,               !- Design Flow Rate Calculation Method
+    0.000944,                !- Design Flow Rate {m3/s}
+    ,                        !- Flow Rate per Zone Floor Area {m3/s-m2}
+    ,                        !- Flow Rate per Person {m3/s-person}
+    ,                        !- Air Changes per Hour {1/hr}
+    Balanced,                !- Ventilation Type
+    ,                        !- Fan Pressure Rise {Pa}
+    1,                       !- Fan Total Efficiency
+    1,                       !- Constant Term Coefficient
+    ,                        !- Temperature Term Coefficient
+    ,                        !- Velocity Term Coefficient
+    ,                        !- Velocity Squared Term Coefficient
+    -100,                    !- Minimum Indoor Temperature {C}
+    ,                        !- Minimum Indoor Temperature Schedule Name
+    100,                     !- Maximum Indoor Temperature {C}
+    ,                        !- Maximum Indoor Temperature Schedule Name
+    -100,                    !- Delta Temperature {deltaC}
+    ,                        !- Delta Temperature Schedule Name
+    -100,                    !- Minimum Outdoor Temperature {C}
+    ,                        !- Minimum Outdoor Temperature Schedule Name
+    100,                     !- Maximum Outdoor Temperature {C}
+    ,                        !- Maximum Outdoor Temperature Schedule Name
+    40;                      !- Maximum Wind Speed {m/s}
+
+  ZoneVentilation:DesignFlowRate,
+    ventilation_nocturne_dz, !- Name
+    DayZone,                 !- Zone or ZoneList Name
+    Scenario_Surventilation_nocturne,  !- Schedule Name
+    AirChanges/Hour,         !- Design Flow Rate Calculation Method
+    ,                        !- Design Flow Rate {m3/s}
+    ,                        !- Flow Rate per Zone Floor Area {m3/s-m2}
+    ,                        !- Flow Rate per Person {m3/s-person}
+    5,                       !- Air Changes per Hour {1/hr}
+    Natural,                 !- Ventilation Type
+    ,                        !- Fan Pressure Rise {Pa}
+    1,                       !- Fan Total Efficiency
+    1,                       !- Constant Term Coefficient
+    ,                        !- Temperature Term Coefficient
+    ,                        !- Velocity Term Coefficient
+    ,                        !- Velocity Squared Term Coefficient
+    -100,                    !- Minimum Indoor Temperature {C}
+    ,                        !- Minimum Indoor Temperature Schedule Name
+    100,                     !- Maximum Indoor Temperature {C}
+    ,                        !- Maximum Indoor Temperature Schedule Name
+    -100,                    !- Delta Temperature {deltaC}
+    ,                        !- Delta Temperature Schedule Name
+    -100,                    !- Minimum Outdoor Temperature {C}
+    ,                        !- Minimum Outdoor Temperature Schedule Name
+    100,                     !- Maximum Outdoor Temperature {C}
+    ,                        !- Maximum Outdoor Temperature Schedule Name
+    40;                      !- Maximum Wind Speed {m/s}
+
+  ZoneVentilation:DesignFlowRate,
+    ventilation_nocturne_nz, !- Name
+    NightZone,               !- Zone or ZoneList Name
+    Scenario_Surventilation_nocturne,  !- Schedule Name
+    AirChanges/Hour,         !- Design Flow Rate Calculation Method
+    ,                        !- Design Flow Rate {m3/s}
+    ,                        !- Flow Rate per Zone Floor Area {m3/s-m2}
+    ,                        !- Flow Rate per Person {m3/s-person}
+    5,                       !- Air Changes per Hour {1/hr}
+    Natural,                 !- Ventilation Type
+    ,                        !- Fan Pressure Rise {Pa}
+    1,                       !- Fan Total Efficiency
+    1,                       !- Constant Term Coefficient
+    ,                        !- Temperature Term Coefficient
+    ,                        !- Velocity Term Coefficient
+    ,                        !- Velocity Squared Term Coefficient
+    -100,                    !- Minimum Indoor Temperature {C}
+    ,                        !- Minimum Indoor Temperature Schedule Name
+    100,                     !- Maximum Indoor Temperature {C}
+    ,                        !- Maximum Indoor Temperature Schedule Name
+    -100,                    !- Delta Temperature {deltaC}
+    ,                        !- Delta Temperature Schedule Name
+    -100,                    !- Minimum Outdoor Temperature {C}
+    ,                        !- Minimum Outdoor Temperature Schedule Name
+    100,                     !- Maximum Outdoor Temperature {C}
+    ,                        !- Maximum Outdoor Temperature Schedule Name
+    40;                      !- Maximum Wind Speed {m/s}
+
+!-   ===========  ALL OBJECTS IN CLASS: HVACTEMPLATE:THERMOSTAT ===========
+
+  HVACTemplate:Thermostat,
+    NZ_Chauffage,            !- Name
+    NightZone_TemperatureYear,  !- Heating Setpoint Schedule Name
+    ,                        !- Constant Heating Setpoint {C}
+    ,                        !- Cooling Setpoint Schedule Name
+    150;                     !- Constant Cooling Setpoint {C}
+
+  HVACTemplate:Thermostat,
+    DZ_Chauffage,            !- Name
+    DayZone_TemperatureYear, !- Heating Setpoint Schedule Name
+    ,                        !- Constant Heating Setpoint {C}
+    ,                        !- Cooling Setpoint Schedule Name
+    150;                     !- Constant Cooling Setpoint {C}
+
+!-   ===========  ALL OBJECTS IN CLASS: HVACTEMPLATE:ZONE:IDEALLOADSAIRSYSTEM ===========
+
+  HVACTemplate:Zone:IdealLoadsAirSystem,
+    DayZone,                 !- Zone Name
+    DZ_Chauffage,            !- Template Thermostat Name
+    ModeChauffage,           !- System Availability Schedule Name
+    50,                      !- Maximum Heating Supply Air Temperature {C}
+    13,                      !- Minimum Cooling Supply Air Temperature {C}
+    ,                        !- Maximum Heating Supply Air Humidity Ratio {kgWater/kgDryAir}
+    ,                        !- Minimum Cooling Supply Air Humidity Ratio {kgWater/kgDryAir}
+    NoLimit,                 !- Heating Limit
+    ,                        !- Maximum Heating Air Flow Rate {m3/s}
+    ,                        !- Maximum Sensible Heating Capacity {W}
+    LimitCapacity,           !- Cooling Limit
+    ,                        !- Maximum Cooling Air Flow Rate {m3/s}
+    0,                       !- Maximum Total Cooling Capacity {W}
+    ,                        !- Heating Availability Schedule Name
+    ,                        !- Cooling Availability Schedule Name
+    None,                    !- Dehumidification Control Type
+    ,                        !- Cooling Sensible Heat Ratio {dimensionless}
+    ,                        !- Dehumidification Setpoint {percent}
+    None,                    !- Humidification Control Type
+    ,                        !- Humidification Setpoint {percent}
+    None,                    !- Outdoor Air Method
+    ,                        !- Outdoor Air Flow Rate per Person {m3/s}
+    ,                        !- Outdoor Air Flow Rate per Zone Floor Area {m3/s-m2}
+    ,                        !- Outdoor Air Flow Rate per Zone {m3/s}
+    ,                        !- Design Specification Outdoor Air Object Name
+    None,                    !- Demand Controlled Ventilation Type
+    NoEconomizer,            !- Outdoor Air Economizer Type
+    None;                    !- Heat Recovery Type
+
+  HVACTemplate:Zone:IdealLoadsAirSystem,
+    NightZone,               !- Zone Name
+    NZ_Chauffage,            !- Template Thermostat Name
+    ModeChauffage,           !- System Availability Schedule Name
+    50,                      !- Maximum Heating Supply Air Temperature {C}
+    13,                      !- Minimum Cooling Supply Air Temperature {C}
+    ,                        !- Maximum Heating Supply Air Humidity Ratio {kgWater/kgDryAir}
+    ,                        !- Minimum Cooling Supply Air Humidity Ratio {kgWater/kgDryAir}
+    NoLimit,                 !- Heating Limit
+    ,                        !- Maximum Heating Air Flow Rate {m3/s}
+    ,                        !- Maximum Sensible Heating Capacity {W}
+    LimitCapacity,           !- Cooling Limit
+    ,                        !- Maximum Cooling Air Flow Rate {m3/s}
+    0,                       !- Maximum Total Cooling Capacity {W}
+    ,                        !- Heating Availability Schedule Name
+    ,                        !- Cooling Availability Schedule Name
+    None,                    !- Dehumidification Control Type
+    ,                        !- Cooling Sensible Heat Ratio {dimensionless}
+    ,                        !- Dehumidification Setpoint {percent}
+    None,                    !- Humidification Control Type
+    ,                        !- Humidification Setpoint {percent}
+    None,                    !- Outdoor Air Method
+    ,                        !- Outdoor Air Flow Rate per Person {m3/s}
+    ,                        !- Outdoor Air Flow Rate per Zone Floor Area {m3/s-m2}
+    ,                        !- Outdoor Air Flow Rate per Zone {m3/s}
+    ,                        !- Design Specification Outdoor Air Object Name
+    None,                    !- Demand Controlled Ventilation Type
+    NoEconomizer,            !- Outdoor Air Economizer Type
+    None;                    !- Heat Recovery Type
+
+!-   ===========  ALL OBJECTS IN CLASS: SIZING:PARAMETERS ===========
+
+  Sizing:Parameters,
+    1.25,                    !- Heating Sizing Factor
+    1.15;                    !- Cooling Sizing Factor
+
+!-   ===========  ALL OBJECTS IN CLASS: ENERGYMANAGEMENTSYSTEM:SENSOR ===========
+
+  EnergyManagementSystem:Sensor,
+    Tnz,                     !- Name
+    NightZone,               !- Output:Variable or Output:Meter Index Key Name
+    Zone Mean Air Temperature;  !- Output:Variable or Output:Meter Name
+
+  EnergyManagementSystem:Sensor,
+    Tdz,                     !- Name
+    DayZone,                 !- Output:Variable or Output:Meter Index Key Name
+    Zone Mean Air Temperature;  !- Output:Variable or Output:Meter Name
+
+  EnergyManagementSystem:Sensor,
+    Text,                    !- Name
+    Environment,             !- Output:Variable or Output:Meter Index Key Name
+    Site Outdoor Air Drybulb Temperature;  !- Output:Variable or Output:Meter Name
+
+!-   ===========  ALL OBJECTS IN CLASS: ENERGYMANAGEMENTSYSTEM:ACTUATOR ===========
+
+  EnergyManagementSystem:Actuator,
+    Vnz,                     !- Name
+    ventilation_nocturne_nz, !- Actuated Component Unique Name
+    Zone Ventilation,        !- Actuated Component Type
+    Air Exchange Flow Rate;  !- Actuated Component Control Type
+
+  EnergyManagementSystem:Actuator,
+    Vdz,                     !- Name
+    ventilation_nocturne_dz, !- Actuated Component Unique Name
+    Zone Ventilation,        !- Actuated Component Type
+    Air Exchange Flow Rate;  !- Actuated Component Control Type
+
+!-   ===========  ALL OBJECTS IN CLASS: ENERGYMANAGEMENTSYSTEM:PROGRAMCALLINGMANAGER ===========
+
+  EnergyManagementSystem:ProgramCallingManager,
+    EMSventilnz,             !- Name
+    BeginTimestepBeforePredictor,  !- EnergyPlus Model Calling Point
+    ventilnz;                !- Program Name 1
+
+  EnergyManagementSystem:ProgramCallingManager,
+    EMSventildz,             !- Name
+    BeginTimestepBeforePredictor,  !- EnergyPlus Model Calling Point
+    ventildz;                !- Program Name 1
+
+!-   ===========  ALL OBJECTS IN CLASS: ENERGYMANAGEMENTSYSTEM:PROGRAM ===========
+
+  EnergyManagementSystem:Program,
+    ventilnz,                !- Name
+    IF DayOfYear>140 && DayOfYear<265 && (HOUR<8 || HOUR>18),  !- Program Line 1
+    IF (Tnz>= 24 && Text <= Tnz),  !- Program Line 2
+    SET Vnz = 0.1979,        !- <none>
+    ELSE,                    !- <none>
+    SET Vnz = 0,             !- <none>
+    ENDIF,                   !- <none>
+    ELSE,                    !- <none>
+    SET Vnz= 0,              !- <none>
+    ENDIF;                   !- <none>
+
+  EnergyManagementSystem:Program,
+    ventildz,                !- Name
+    IF DayOfYear>140 && DayOfYear<265 && (HOUR<8 || HOUR>18),  !- Program Line 1
+    IF (Tdz>= 24 && Text <= Tdz),  !- Program Line 2
+    SET Vdz = 0.2034,        !- <none>
+    ELSE,                    !- <none>
+    SET Vdz = 0,             !- <none>
+    ENDIF,                   !- <none>
+    ELSE,                    !- <none>
+    SET Vdz= 0,              !- <none>
+    ENDIF;                   !- <none>
+
+!-   ===========  ALL OBJECTS IN CLASS: WATERUSE:EQUIPMENT ===========
+
+  WaterUse:Equipment,
+    ECS,                     !- Name
+    General,                 !- End-Use Subcategory
+    0.0000049444,            !- Peak Flow Rate {m3/s}
+    ECSSchedule;             !- Flow Rate Fraction Schedule Name
+
+!-   ===========  ALL OBJECTS IN CLASS: LIFECYCLECOST:NONRECURRINGCOST ===========
+
+  LifeCycleCost:NonrecurringCost,
+    Default Cost,            !- Name
+    Construction,            !- Category
+    0,                       !- Cost
+    ServicePeriod;           !- Start of Costs
+
+!-   ===========  ALL OBJECTS IN CLASS: LIFECYCLECOST:USEPRICEESCALATION ===========
+
+  LifeCycleCost:UsePriceEscalation,
+    U.S. Avg  Commercial-Electricity,  !- LCC Price Escalation Name
+    Electricity,             !- Resource
+    2011,                    !- Escalation Start Year
+    January,                 !- Escalation Start Month
+    0.9838,                  !- Year 1 Escalation
+    0.9730,                  !- Year 2 Escalation
+    0.9632,                  !- Year 3 Escalation
+    0.9611,                  !- Year 4 Escalation
+    0.9571,                  !- Year 5 Escalation
+    0.9553,                  !- Year 6 Escalation
+    0.9539,                  !- Year 7 Escalation
+    0.9521,                  !- Year 8 Escalation
+    0.9546,                  !- Year 9 Escalation
+    0.9550,                  !- <none>
+    0.9553,                  !- <none>
+    0.9564,                  !- <none>
+    0.9575,                  !- <none>
+    0.9596,                  !- <none>
+    0.9618,                  !- <none>
+    0.9614,                  !- <none>
+    0.9618,                  !- <none>
+    0.9618,                  !- <none>
+    0.9593,                  !- <none>
+    0.9589,                  !- <none>
+    0.9607,                  !- <none>
+    0.9625,                  !- <none>
+    0.9650,                  !- <none>
+    0.9708,                  !- <none>
+    0.9751,                  !- <none>
+    0.9762,                  !- <none>
+    0.9766,                  !- <none>
+    0.9766,                  !- <none>
+    0.9769,                  !- <none>
+    0.9773;                  !- <none>
+
+  LifeCycleCost:UsePriceEscalation,
+    U.S. Avg  Commercial-Distillate Oil,  !- LCC Price Escalation Name
+    FuelOilNo1,              !- Resource
+    2011,                    !- Escalation Start Year
+    January,                 !- Escalation Start Month
+    0.9714,                  !- Year 1 Escalation
+    0.9730,                  !- Year 2 Escalation
+    0.9942,                  !- Year 3 Escalation
+    1.0164,                  !- Year 4 Escalation
+    1.0541,                  !- Year 5 Escalation
+    1.0928,                  !- Year 6 Escalation
+    1.1267,                  !- Year 7 Escalation
+    1.1580,                  !- Year 8 Escalation
+    1.1792,                  !- Year 9 Escalation
+    1.1967,                  !- <none>
+    1.2200,                  !- <none>
+    1.2333,                  !- <none>
+    1.2566,                  !- <none>
+    1.2709,                  !- <none>
+    1.2826,                  !- <none>
+    1.2985,                  !- <none>
+    1.3102,                  !- <none>
+    1.3250,                  !- <none>
+    1.3261,                  !- <none>
+    1.3282,                  !- <none>
+    1.3324,                  !- <none>
+    1.3356,                  !- <none>
+    1.3431,                  !- <none>
+    1.3510,                  !- <none>
+    1.3568,                  !- <none>
+    1.3606,                  !- <none>
+    1.3637,                  !- <none>
+    1.3674,                  !- <none>
+    1.3706,                  !- <none>
+    1.3743;                  !- <none>
+
+  LifeCycleCost:UsePriceEscalation,
+    U.S. Avg  Commercial-Residual Oil,  !- LCC Price Escalation Name
+    FuelOilNo2,              !- Resource
+    2011,                    !- Escalation Start Year
+    January,                 !- Escalation Start Month
+    0.8469,                  !- Year 1 Escalation
+    0.8257,                  !- Year 2 Escalation
+    0.8681,                  !- Year 3 Escalation
+    0.8988,                  !- Year 4 Escalation
+    0.9289,                  !- Year 5 Escalation
+    0.9604,                  !- Year 6 Escalation
+    0.9897,                  !- Year 7 Escalation
+    1.0075,                  !- Year 8 Escalation
+    1.0314,                  !- Year 9 Escalation
+    1.0554,                  !- <none>
+    1.0861,                  !- <none>
+    1.1278,                  !- <none>
+    1.1497,                  !- <none>
+    1.1620,                  !- <none>
+    1.1743,                  !- <none>
+    1.1852,                  !- <none>
+    1.1948,                  !- <none>
+    1.2037,                  !- <none>
+    1.2071,                  !- <none>
+    1.2119,                  !- <none>
+    1.2139,                  !- <none>
+    1.2194,                  !- <none>
+    1.2276,                  !- <none>
+    1.2365,                  !- <none>
+    1.2420,                  !- <none>
+    1.2461,                  !- <none>
+    1.2509,                  !- <none>
+    1.2550,                  !- <none>
+    1.2591,                  !- <none>
+    1.2638;                  !- <none>
+
+  LifeCycleCost:UsePriceEscalation,
+    U.S. Avg  Commercial-Natural gas,  !- LCC Price Escalation Name
+    NaturalGas,              !- Resource
+    2011,                    !- Escalation Start Year
+    January,                 !- Escalation Start Month
+    0.9823,                  !- Year 1 Escalation
+    0.9557,                  !- Year 2 Escalation
+    0.9279,                  !- Year 3 Escalation
+    0.9257,                  !- Year 4 Escalation
+    0.9346,                  !- Year 5 Escalation
+    0.9412,                  !- Year 6 Escalation
+    0.9512,                  !- Year 7 Escalation
+    0.9645,                  !- Year 8 Escalation
+    0.9856,                  !- Year 9 Escalation
+    1.0067,                  !- <none>
+    1.0222,                  !- <none>
+    1.0410,                  !- <none>
+    1.0610,                  !- <none>
+    1.0787,                  !- <none>
+    1.0942,                  !- <none>
+    1.1098,                  !- <none>
+    1.1220,                  !- <none>
+    1.1308,                  !- <none>
+    1.1386,                  !- <none>
+    1.1486,                  !- <none>
+    1.1619,                  !- <none>
+    1.1763,                  !- <none>
+    1.1918,                  !- <none>
+    1.2118,                  !- <none>
+    1.2284,                  !- <none>
+    1.2439,                  !- <none>
+    1.2605,                  !- <none>
+    1.2772,                  !- <none>
+    1.2938,                  !- <none>
+    1.3115;                  !- <none>
+
+  LifeCycleCost:UsePriceEscalation,
+    U.S. Avg  Commercial-Coal,  !- LCC Price Escalation Name
+    Coal,                    !- Resource
+    2011,                    !- Escalation Start Year
+    January,                 !- Escalation Start Month
+    0.9970,                  !- Year 1 Escalation
+    1.0089,                  !- Year 2 Escalation
+    1.0089,                  !- Year 3 Escalation
+    0.9941,                  !- Year 4 Escalation
+    0.9941,                  !- Year 5 Escalation
+    1.0000,                  !- Year 6 Escalation
+    1.0030,                  !- Year 7 Escalation
+    1.0059,                  !- Year 8 Escalation
+    1.0089,                  !- Year 9 Escalation
+    1.0119,                  !- <none>
+    1.0148,                  !- <none>
+    1.0178,                  !- <none>
+    1.0208,                  !- <none>
+    1.0267,                  !- <none>
+    1.0297,                  !- <none>
+    1.0356,                  !- <none>
+    1.0415,                  !- <none>
+    1.0534,                  !- <none>
+    1.0564,                  !- <none>
+    1.0593,                  !- <none>
+    1.0653,                  !- <none>
+    1.0712,                  !- <none>
+    1.0742,                  !- <none>
+    1.0801,                  !- <none>
+    1.0831,                  !- <none>
+    1.0831,                  !- <none>
+    1.0861,                  !- <none>
+    1.0890,                  !- <none>
+    1.0920,                  !- <none>
+    1.0950;                  !- <none>
+
+!-   ===========  ALL OBJECTS IN CLASS: OUTPUT:VARIABLEDICTIONARY ===========
+
+  Output:VariableDictionary,IDF,Unsorted;
+
+!-   ===========  ALL OBJECTS IN CLASS: OUTPUT:SURFACES:LIST ===========
+
+  Output:Surfaces:List,Details;
+
+!-   ===========  ALL OBJECTS IN CLASS: OUTPUT:SURFACES:DRAWING ===========
+
+  Output:Surfaces:Drawing,DXF,Triangulate3DFace;
+
+!-   ===========  ALL OBJECTS IN CLASS: OUTPUT:ENERGYMANAGEMENTSYSTEM ===========
+
+  Output:EnergyManagementSystem,
+    None,                    !- Actuator Availability Dictionary Reporting
+    None,                    !- Internal Variable Availability Dictionary Reporting
+    None;                    !- EMS Runtime Language Debug Output Level
+
+!-   ===========  ALL OBJECTS IN CLASS: OUTPUT:TABLE:SUMMARYREPORTS ===========
+
+  Output:Table:SummaryReports,
+    AllSummary;              !- Report 1 Name
+
+!-   ===========  ALL OBJECTS IN CLASS: OUTPUTCONTROL:TABLE:STYLE ===========
+
+  OutputControl:Table:Style,
+    HTML,                    !- Column Separator
+    JtoKWH;                  !- Unit Conversion
+
+!-   ===========  ALL OBJECTS IN CLASS: OUTPUT:VARIABLE ===========
+
+  Output:Variable,Environment,Zone Mean Air Temperature,Hourly;
+
+  Output:Variable,*,Site Outdoor Air Drybulb Temperature,Hourly;
+
+  Output:Variable,*,People Occupant Count,Hourly;
+
+  Output:Variable,*,Zone Ventilation Sensible Heat Loss Energy,Hourly;
+
+  Output:Variable,*,Zone Windows Total Transmitted Solar Radiation Rate,Hourly;
+
+  Output:Variable,*,Zone Electric Equipment Electricity Rate,Hourly;
+
+  Output:Variable,*,Electric Equipment Electricity Rate,Hourly;
+
+  Output:Variable,*,Zone Thermostat Heating Setpoint Temperature,Hourly;
+
+  Output:Variable,*,Facility Total HVAC Electricity Demand Rate,Hourly;
+
+  Output:Variable,*,People Total Heating Rate,Hourly;
+
+  Output:Variable,*,Zone Windows Total Heat Gain Rate,Hourly;
+
+  Output:Variable,*,Zone Windows Total Heat Loss Rate,Hourly;
+
+  Output:Variable,*,Zone Infiltration Total Heat Loss Energy,Hourly;
+
+  Output:Variable,*,Zone Ventilation Total Heat Loss Energy,Hourly;
+
+  Output:Variable,*,Zone Electric Equipment Total Heating Rate,Hourly;
+
+  Output:Variable,*,Site Diffuse Solar Radiation Rate per Area,Hourly;
+
+  Output:Variable,*,Site Direct Solar Radiation Rate per Area,Hourly;
+
+  Output:Variable,*,Site Wind Speed,Hourly;
+
+  Output:Variable,*,Site Wind Direction,Hourly;
+
+  Output:Variable,*,Zone Air System Sensible Heating Rate,Hourly;
+
+  Output:Variable,*,Zone Air System Sensible Cooling Rate,Hourly;
+
+  Output:Variable,*,Zone People Occupant Count,Hourly;
+
+  Output:Variable,*,Zone Total Internal Total Heating Energy,Hourly;
+
+  Output:Variable,*,Zone Ideal Loads Supply Air Total Heating Energy,Hourly;
+
+  Output:Variable,*,Zone Ideal Loads Zone Total Heating Energy,Hourly;
+
+!-   ===========  ALL OBJECTS IN CLASS: OUTPUT:JSON ===========
+
+  Output:JSON,
+    TimeSeriesAndTabular,    !- Option Type
+    Yes,                     !- Output JSON
+    No,                      !- Output CBOR
+    No;                      !- Output MessagePack
+
+!-   ===========  ALL OBJECTS IN CLASS: OUTPUT:SQLITE ===========
+
+  Output:SQLite,
+    SimpleAndTabular;        !- Option Type
+
+!-   ===========  ALL OBJECTS IN CLASS: FUELFACTORS ===========
+
+  FuelFactors,
+    Electricity;             !- Existing Fuel Resource Name
+
+!-   ===========  ALL OBJECTS IN CLASS: OUTPUT:DIAGNOSTICS ===========
+
+  Output:Diagnostics,
+    DISPLAYEXTRAWARNINGS;    !- Key 1
+
